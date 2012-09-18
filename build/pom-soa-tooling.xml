@@ -290,26 +290,6 @@
 			</modules>
 		</profile>
 
-		<!-- <profile>
-			<id>deltacloud</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<modules>
-				<module>../deltacloud</module>
-			</modules>
-		</profile>
-
-		<profile>
-			<id>deltacloud-bootstrap</id>
-			<modules>
-				<module>../tests</module>
-				<module>../as</module>
-				<module>../deltacloud</module>
-				<module>../usage</module>
-			</modules>
-		</profile> -->
-
 		<profile>
 			<id>usage</id>
 			<activation>

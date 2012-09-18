@@ -19,7 +19,7 @@
 			 
 			mvn clean install -P parent,\!emma/lib,\!tests,\!jmx,\!archives,\!as,\!common,\!jst,\!xulrunner,\!vpe \
 			-P \!jsf,\!freemarker,\!hibernatetools,\!portlet,\!struts,\!cdi,\!birt,\!seam,\!examples \
-			-P \!maven,\!ws,\!gwt,\!deltacloud,\!runtime,\!usage,\!central,\!aggregate-coverage
+			-P \!maven,\!ws,\!gwt,\!runtime,\!usage,\!central,\!aggregate-coverage
 			
 		-->
 		<profile>
@@ -531,26 +531,6 @@
 			<modules>
 				<module>../tests</module>
 				<module>../gwt</module>
-				<module>../usage</module>
-			</modules>
-		</profile>
-
-		<profile>
-			<id>deltacloud</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<modules>
-				<module>../deltacloud</module>
-			</modules>
-		</profile>
-
-		<profile>
-			<id>deltacloud-bootstrap</id>
-			<modules>
-				<module>../tests</module>
-				<module>../as</module>
-				<module>../deltacloud</module>
 				<module>../usage</module>
 			</modules>
 		</profile>
