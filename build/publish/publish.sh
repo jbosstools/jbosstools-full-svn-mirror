@@ -471,5 +471,11 @@ date; rsync -arzq --delete ${STAGINGDIR}/logs $INTRNALDEST/builds/staging/${JOB_
 # purge tmpdir
 rm -fr $tmpdir
 
+# regenerate http://download.jboss.org/jbosstools/builds/nightly/*/*/composite*.xml files for up to 5 builds, cleaning anything older than 5 days old
+wget http://anonsvn.jboss.org/repos/jbosstools/trunk/build/util/cleanup/jbosstools-cleanup.sh --no-check-certificate
+chmod +x jbosstools-cleanup.sh
+./jbosstools-cleanup.sh 5 5
+rm -f jbosstools-cleanup.sh
+
 # to avoid looking for files that are still being synched/nfs-copied, wait a bit before trying to run tests (the next step usually)
 sleep 15s
