@@ -268,8 +268,15 @@ popd >/dev/null
 mkdir -p ${STAGINGDIR}/logs
 
 # generate results page for an aggregate build only
-if [[ ${JOB_NAME/.aggregate} != ${JOB_NAME} ]] && [[ -f ${WORKSPACE}/sources/results/pom.xml ]] && [[ -f ${WORKSPACE}/sources/results/build.xml ]]; then
+if [[ ${JOB_NAME/.aggregate} != ${JOB_NAME} ]]; then
+	mkdir -p ${WORKSPACE}/sources/results
 	pushd ${WORKSPACE}/sources/results >/dev/null
+	resultsPageRoot=https://anonsvn.jboss.org/repos/jbosstools/trunk/build/results/
+	wget ${resultsPageRoot} -q --no-check-certificate -N
+	files=$(cat index.html | egrep -v "http://|\.\.|\.gitignore" | grep href | sed -e 's#.\+href="\(.\+\)".\+#'${resultsPageRoot}'\1#g' | egrep -v ".+/$|README")
+	if [[ $files ]]; then wget ${files} -q --no-check-certificate -N; fi
+	rm -f index.html
+
 	export JAVA_HOME=$(find /qa/tools/opt -maxdepth 1 -mindepth 1 -type d -name "jdk1.6.0_*" | sort | tail -1)
 	export M2_HOME=$(find /qa/tools/opt -maxdepth 1 -mindepth 1 -type d -name "apache-maven-3.0.*" | sort | tail -1)
 	${M2_HOME}/bin/mvn -q -B install -DJOB_NAME=${JOB_NAME} -DBUILD_NUMBER=${BUILD_NUMBER} -DBUILD_ID=${BUILD_ID}
