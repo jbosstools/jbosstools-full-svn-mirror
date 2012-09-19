@@ -1,34 +1,26 @@
-Revised swimlanes, as implemented in 3.2_stable_branch, 3.3_stable_branch and 3.3_trunk jobs, 2012/05/24
+Revised swimlanes, as implemented for 3.2.x, 3.3.x, 4.0.x jobs
 
-TODO: replace 3.3_trunk w/ 3.4_trunk; add 3.4_stable jobs
+Last updated 2012/09/18
 
 See also https://svn.jboss.org/repos/jbosstools/trunk/build/ -> pom*.xml
 
 ------------------------
 
-In 3.2 / 3.3:
+New in 4.0 (Core):
 
-maven   -> cdi  -> jst -> common -> tests
-	-> seam  -> jst -> common -> tests
-    	-> seam -> as -> archives, jmx -> tests
-        -> hibernate -> freemarker -> tests
-        -> jsf -> vpe -> jst -> common -> tests
+New component hierarchy/organization (after migration to git):
 
-struts -> vpe -> xulrunner
+https://issues.jboss.org/secure/attachment/12356737/Components-Final%20.png
 
-examples -> portlet
+* migration to git: https://issues.jboss.org/browse/JBIDE-12475?
 
-birt, portlet, modeshape, profiler, smooks, tptp -> tests
+* deltacloud [removed]
 
-ws, deltacloud -> as -> archives, jmx -> tests
+* runtime no longer depends on as, seam
 
-bpel -> archives
+New in 4.0 (SOA Tooling):
 
-jbpm -> flow, common -> tests 
-
-esb -> jst -> common -> tests
-
-runtime, tests, usage, drools, pi4soa, savara, teiid -> [NONE]
+* Flow/jbpm4 may be removed. See https://issues.jboss.org/browse/JBIDE-12631
 
 ------------------------
 
@@ -67,3 +59,28 @@ teiid, modeshape -> tests
 
 (also includes SwitchYard, Drools, Savara)
 
+----------------------------------------
+
+In 3.2 / 3.3:
+
+maven   -> cdi  -> jst -> common -> tests
+	-> seam  -> jst -> common -> tests
+    	-> seam -> as -> archives, jmx -> tests
+        -> hibernate -> freemarker -> tests
+        -> jsf -> vpe -> jst -> common -> tests
+
+struts -> vpe -> xulrunner
+
+examples -> portlet
+
+birt, portlet, modeshape, profiler, smooks, tptp -> tests
+
+ws, deltacloud -> as -> archives, jmx -> tests
+
+bpel -> archives
+
+jbpm -> flow, common -> tests 
+
+esb -> jst -> common -> tests
+
+runtime, tests, usage, drools, pi4soa, savara, teiid -> [NONE]
