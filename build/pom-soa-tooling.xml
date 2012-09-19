@@ -19,7 +19,7 @@
 			this profile (excluding all others); currently parent pom includes target-platform build too, so only need to build the parent
 			 
 			mvn clean install -P parent,\!libs,\!tests,\!jmx,\!archives,\!common \
-			-P \!smooks,\!bpel,\!esb,\!jst,\!modeshape,\!flow,\!jbpm,\!usage,\!aggregate-coverage
+			-P \!smooks,\!bpel,\!esb,\!jst,\!modeshape,\!jbpm,\!usage,\!aggregate-coverage
 			
 		-->
 		<profile>
@@ -161,7 +161,6 @@
 				<module>../usage</module>
 				<module>../runtime</module>
 				<module>../esb</module>
-				<module>../flow</module>
 				<module>../jbpm</module>
 				<module>../examples</module>
 				<!-- also needs drools but that's only available as binary upstream so be sure to build it first and resolve from composite staging site -->
@@ -252,25 +251,6 @@
 		</profile>
 
 		<profile>
-			<id>flow</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<modules>
-				<module>../flow</module>
-			</modules>
-		</profile>
-
-		<profile>
-			<id>flow-bootstrap</id>
-			<modules>
-				<module>../tests</module>
-				<module>../flow</module>
-				<module>../usage</module>
-			</modules>
-		</profile>
-
-		<profile>
 			<id>jbpm</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
@@ -284,9 +264,8 @@
 			<id>jbpm-bootstrap</id>
 			<modules>
 				<module>../tests</module>
-				<module>../flow</module>
-				<module>../jbpm</module>
 				<module>../usage</module>
+				<module>../jbpm</module>
 			</modules>
 		</profile>
 
