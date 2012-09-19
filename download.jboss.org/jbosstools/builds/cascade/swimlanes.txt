@@ -1,6 +1,6 @@
 Revised swimlanes, as implemented for 3.2.x, 3.3.x, 4.0.x jobs
 
-Last updated 2012/09/18
+Last updated 2012/09/19
 
 See also https://svn.jboss.org/repos/jbosstools/trunk/build/ -> pom*.xml
 
@@ -20,7 +20,7 @@ https://issues.jboss.org/secure/attachment/12356737/Components-Final%20.png
 
 New in 4.0 (SOA Tooling):
 
-* Flow/jbpm4 may be removed. See https://issues.jboss.org/browse/JBIDE-12631
+* Flow/jbpm4/jpdl4 removed. See https://issues.jboss.org/browse/JBIDE-12631
 
 ------------------------
 
