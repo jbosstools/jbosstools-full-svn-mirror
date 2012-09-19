@@ -32,6 +32,7 @@
 		<!-- See JBIDE-12420 -->
 		<skipPrivateRequirements>true</skipPrivateRequirements>
 		<requirementsDirectory>${project.build.directory}/requirements</requirementsDirectory>
+		<skipTestsWithPrivateRequirements>${skipPrivateRequirements}</skipTestsWithPrivateRequirements>
 		<!-- Tests Timeout in seconds -->
 		<surefire.timeout>2400</surefire.timeout>
 		<!-- Default coverage filter, to be overriden when necessary -->
@@ -346,8 +347,6 @@
 		<url>https://jira.jboss.org/jira/secure/</url>
 	</issueManagement>
 	<profiles>
-
-
 		<!-- Latest JBT work-in-progress component builds (CI builds), not yet
 			pushed to the above nightly update site -->
 		<!-- disabled by default because it causes local compilation problems -->
@@ -856,6 +855,23 @@
 					</releases>
 				</repository>
 			</repositories>
+		</profile>
+
+		<!-- Multiple triggers to disable tests that depends on private requirements
+			These profiles are workaround for Maven to support minimal operations
+			http://jira.codehaus.org/browse/MNG-5347 -->
+		<profile>
+			<id>mavenTestSkip</id>
+			<activation>
+				<property>
+					<name>maven.test.skip</name>
+					<value>true</value>
+				</property>
+			</activation>
+			<properties>
+				<maven.test.skip>true</maven.test.skip>
+				<skipTestsWithPrivateRequirements>true</skipTestsWithPrivateRequirements>
+			</properties>
 		</profile>
 	</profiles>
 
