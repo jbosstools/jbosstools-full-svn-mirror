@@ -4,27 +4,19 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
     <vpe:tag name="jsp:declaration" case-sensitive="yes">
-	    <vpe:template children="no" modify="no">
-			<vpe:any value="{name()}" title="{tagstring()}" style="display:none;"/>
-	    </vpe:template>
+	    <vpe:template children="no" modify="no" />
     </vpe:tag>
 
     <vpe:tag name="jsp:expression" case-sensitive="yes">
-	    <vpe:template children="no" modify="no">
-			<vpe:any value="{name()}" title="{tagstring()}" style="display:none;"/>
-	    </vpe:template>
+	    <vpe:template children="no" modify="no" />
     </vpe:tag>
 
     <vpe:tag name="jsp:scriptlet" case-sensitive="yes">
-	    <vpe:template children="no" modify="no">
-			<vpe:any value="{name()}" title="{tagstring()}" style="display:none;"/>
-	    </vpe:template>
+	    <vpe:template children="no" modify="no" />
     </vpe:tag>
 
     <vpe:tag name="jsp:directive.attribute" case-sensitive="yes">
-	    <vpe:template children="no" modify="no">
-			<vpe:any value="{name()}" title="{tagstring()}" style="display:none;"/>
-	    </vpe:template>
+	    <vpe:template children="no" modify="no" />
     </vpe:tag>
 
     <vpe:tag name="jsp:directive.include" case-sensitive="yes">
@@ -46,15 +38,11 @@
     </vpe:tag>
 
     <vpe:tag name="jsp:directive.page" case-sensitive="yes">
-	    <vpe:template children="no" modify="no">
-			<vpe:any value="{name()}" title="{tagstring()}" style="display:none;"/>
-	    </vpe:template>
+	    <vpe:template children="no" modify="no" />
     </vpe:tag>
 
     <vpe:tag name="jsp:directive.tag" case-sensitive="yes">
-	    <vpe:template children="no" modify="no">
-			<vpe:any value="{name()}" title="{tagstring()}" style="display:none;"/>
-	    </vpe:template>
+	   <vpe:template children="no" modify="no" />
     </vpe:tag>
 
     <vpe:tag name="jsp:directive.taglib" case-sensitive="yes">
@@ -64,15 +52,11 @@
     </vpe:tag>
 
     <vpe:tag name="jsp:directive.variable" case-sensitive="yes">
-	    <vpe:template children="no" modify="no">
-			<vpe:any value="{name()}" title="{tagstring()}" style="display:none;"/>
-	    </vpe:template>
+	    <vpe:template children="no" modify="no" />
     </vpe:tag>
 
     <vpe:tag name="jsp:attribute" case-sensitive="yes">
-	    <vpe:template children="yes" modify="yes">
-			<vpe:any value="{name()}" title="{tagstring()}" style="display:none;"/>
-	    </vpe:template>
+	    <vpe:template children="no" modify="no" />
     </vpe:tag>
 
     <vpe:tag name="jsp:body" case-sensitive="yes">
@@ -86,45 +70,31 @@
     </vpe:tag>
 
     <vpe:tag name="jsp:element" case-sensitive="yes">
-	    <vpe:template children="no" modify="no">
-			<vpe:any value="{name()}" title="{tagstring()}" style="display:none;"/>
-	    </vpe:template>
+	   <vpe:template children="no" modify="no" />
     </vpe:tag>
 
     <vpe:tag name="jsp:doBody" case-sensitive="no">
-	    <vpe:template children="no" modify="no">
-			<vpe:any value="{name()}" title="{tagstring()}" style="display:none;"/>
-	    </vpe:template>
+	    <vpe:template children="no" modify="no" />
     </vpe:tag>
 
     <vpe:tag name="jsp:forward" case-sensitive="yes">
-	    <vpe:template children="no" modify="no">
-			<vpe:any value="{name()}" title="{tagstring()}" style="display:none;"/>
-	    </vpe:template>
+	    <vpe:template children="no" modify="no" />
     </vpe:tag>
 
     <vpe:tag name="jsp:getProperty" case-sensitive="yes">
-	    <vpe:template children="no" modify="no">
-			<vpe:any value="{name()}" title="{tagstring()}" style="display:none;"/>
-	    </vpe:template>
+	    <vpe:template children="no" modify="no" />
     </vpe:tag>
 
     <vpe:tag name="jsp:invoke" case-sensitive="yes">
-	    <vpe:template children="no" modify="no">
-			<vpe:any value="{name()}" title="{tagstring()}" style="display:none;"/>
-	    </vpe:template>
+	   <vpe:template children="no" modify="no" />
     </vpe:tag>
 
     <vpe:tag name="jsp:output" case-sensitive="yes">
-	    <vpe:template children="no" modify="no">
-			<vpe:any value="{name()}" title="{tagstring()}" style="display:none;"/>
-	    </vpe:template>
+	   <vpe:template children="no" modify="no" />
     </vpe:tag>
 
     <vpe:tag name="jsp:plugin" case-sensitive="yes">
-	    <vpe:template children="no" modify="no">
-			<vpe:any value="{name()}" title="{tagstring()}" style="display:none;"/>
-	    </vpe:template>
+	    <vpe:template children="no" modify="no" />
     </vpe:tag>
 
     <vpe:tag name="jsp:root" case-sensitive="yes">
@@ -134,9 +104,7 @@
     </vpe:tag>
 
     <vpe:tag name="jsp:setProperty" case-sensitive="yes">
-	    <vpe:template children="no" modify="no">
-			<vpe:any value="{name()}" title="{tagstring()}" style="display:none;"/>
-	    </vpe:template>
+	    <vpe:template children="no" modify="no" />
     </vpe:tag>
 
     <vpe:tag name="jsp:text" case-sensitive="yes">
@@ -150,8 +118,6 @@
     </vpe:tag>
 
     <vpe:tag name="jsp:useBean" case-sensitive="yes">
-	    <vpe:template children="no" modify="no">
-			<vpe:any value="{name()}" title="{tagstring()}" style="display:none;"/>
-	    </vpe:template>
+	    <vpe:template children="no" modify="no" />
     </vpe:tag>
 </vpe:templates>
