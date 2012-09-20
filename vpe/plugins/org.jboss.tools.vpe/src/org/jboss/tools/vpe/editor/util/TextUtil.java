@@ -12,15 +12,19 @@ package org.jboss.tools.vpe.editor.util;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Map.Entry;
+import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.eclipse.swt.graphics.Point;
 import org.jboss.tools.jst.jsp.util.NodesManagingUtil;
 import org.jboss.tools.vpe.VpePlugin;
+import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.mozilla.interfaces.nsIDOMKeyEvent;
 import org.w3c.dom.Node;
 
@@ -41,7 +45,8 @@ public class TextUtil {
 	private final static char CHR_ESC_STOP = ';';
 	private final static char CHR_HEX_FLAG = 'x';
 	private final static String SPCHARS = "\f\n\r\t\u0020\u2028\u2029"; //$NON-NLS-1$
-	private static final Pattern elPattern = Pattern.compile("(#|\\$)\\{\\s*([^\\s])"); //$NON-NLS-1$
+	private static final Pattern EL_START_PATTERN = Pattern.compile("(#|\\$)\\{\\s*([^\\s])"); //$NON-NLS-1$
+	private static final String EL_END_PATTERN = "}"; //$NON-NLS-1$
 	
 	private final static Map<Character, String> textSet = new HashMap<Character, String>();
 	static {
@@ -456,24 +461,47 @@ public class TextUtil {
 	}
 	/**
 	 * @author mareshkau
+	 * @author Yahor Radtsevich (yradtsevich)
 	 * @param node or attribute for which we want calculate position start el position
 	 * 
 	 * @return position if we can find position
 	 * 			-1 if we can't find pisition, <document_offcet>'#{el}', return start position of el
 	 */
-	public static int getStartELDocumentPosition(Node node) {
-
+	@SuppressWarnings("restriction")
+	public static int getPositionForOpenOn(Node node, VpePageContext pageContext) {
 		if (node != null && node.getNodeValue() != null
 				&& node.getNodeValue().length() > 0) {
-			int elPosition = 0;
-			Matcher beginELExpresion = elPattern.matcher(node.getNodeValue());
-			if (beginELExpresion.find()) {
-				// +1 becouse we should have position of first symbol
-				elPosition = beginELExpresion.start(2) + 1;
+			List<Integer> elStarts = new ArrayList<Integer>();
+			Matcher beginELExpresion = EL_START_PATTERN.matcher(node.getNodeValue());
+			while (beginELExpresion.find()) {
+				elStarts.add(beginELExpresion.start(2));
 			}
-			int offset = NodesManagingUtil.getStartOffsetNode(node)
-					+ elPosition;
-			return offset;
+			
+			final int startOffsetNode = NodesManagingUtil.getStartOffsetNode(node);
+			final int endOffsetNode = startOffsetNode + node.getNodeValue().length();
+			int openOnOffset = startOffsetNode;
+			if (!elStarts.isEmpty()) {
+				// +1 because we should have position of first symbol
+				openOnOffset += elStarts.get(0) + 1;
+			}			
+
+			// Fix for the cases when a part of node value is already selected in the source viewer (JBIDE-11588).
+			// If yes, than check if it is an el-expression and return position of the selection end.
+			Point selection = pageContext.getSourceBuilder().getSelectionRange();
+			int selectionStart = selection.x;
+			int selectionEnd = selectionStart + selection.y;			
+			if (selectionStart >= startOffsetNode && selectionEnd <= endOffsetNode) {
+				for (int elStart : elStarts) {
+					int elEnd = node.getNodeValue().indexOf(EL_END_PATTERN, elStart);
+					if (selectionEnd >= elStart + startOffsetNode && selectionEnd <= elEnd + startOffsetNode) {
+						if (selectionStart != selectionEnd) {
+							openOnOffset = selectionEnd - 1;
+						}
+					}
+				}
+			}
+			
+			return openOnOffset;
 		}
 		return -1;
 	}

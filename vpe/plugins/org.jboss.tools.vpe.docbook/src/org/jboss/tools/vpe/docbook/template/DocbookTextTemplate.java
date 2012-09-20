@@ -70,7 +70,7 @@ public class DocbookTextTemplate extends VpeAbstractTemplate {
 			
 		Point selection = pageContext.getSourceBuilder().getSelectionRange();
 		//processing for el expressions
-		int offset = TextUtil.getStartELDocumentPosition(sourceNode);
+		int offset = TextUtil.getPositionForOpenOn(sourceNode, pageContext);
 		IRegion resultRegion;
 		if(offset >= 0) {
 			resultRegion = new Region(offset,0);
