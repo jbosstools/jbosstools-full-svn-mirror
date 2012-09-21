@@ -19,7 +19,7 @@ TARGET_FOLDER=$3
 PROJECT_NAME=$4
 
 # should be ${JOB_NAME}/all/repo, but may also be something else, eg., for SwitchYard-Tools, use ${JOB_NAME}/eclipse
-if [[ ${JOB_NAME} ]]; then PUBLISH_PATH=${JOB_NAME}/all/repo; fi
+if [[ ${JOB_NAME} ]]; then PUBLISH_PATH=${JOB_NAME//-publish}; PUBLISH_PATH=${PUBLISH_PATH//-promote}/all/repo; fi
 if [[ $5 ]]; then PUBLISH_PATH=$5; fi
 
 if [[ $4 ]]; then
