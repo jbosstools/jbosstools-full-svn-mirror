@@ -17,9 +17,6 @@
    <feature url="features/org.jboss.tools.runtime.jbpm.detector.feature_0.0.0.jar" id="org.jboss.tools.runtime.jbpm.detector.feature" version="0.0.0">
       <category name="JBoss Tools runtime-soa Nightly Build Update Site"/>
    </feature>
-   <feature url="features/org.jboss.tools.runtime.soa.test.feature_0.0.0.jar" id="org.jboss.tools.runtime.soa.test.feature" version="0.0.0">
-      <category name="JBoss Tools runtime-soa Nightly Build Update Site"/>
-   </feature>
 
    <!-- TODO: add sources -->
    <feature url="features/org.jboss.tools.runtime.drools.detector.feature.source_0.0.0.jar" id="org.jboss.tools.runtime.drools.detector.feature.source" version="0.0.0">
@@ -29,9 +26,6 @@
       <category name="JBoss Tools runtime-soa Nightly Build Update Site"/>
    </feature>
    <feature url="features/org.jboss.tools.runtime.jbpm.detector.feature.source_0.0.0.jar" id="org.jboss.tools.runtime.jbpm.detector.feature.source" version="0.0.0">
-      <category name="JBoss Tools runtime-soa Nightly Build Update Site"/>
-   </feature>
-   <feature url="features/org.jboss.tools.runtime.soa.test.feature.source_0.0.0.jar" id="org.jboss.tools.runtime.soa.test.feature.source" version="0.0.0">
       <category name="JBoss Tools runtime-soa Nightly Build Update Site"/>
    </feature>
 </site>
