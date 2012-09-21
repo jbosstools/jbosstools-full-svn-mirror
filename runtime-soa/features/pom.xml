@@ -16,6 +16,5 @@
 		<module>org.jboss.tools.runtime.drools.detector.feature</module>
 		<module>org.jboss.tools.runtime.esb.detector.feature</module>
 		<module>org.jboss.tools.runtime.jbpm.detector.feature</module>
-		<module>org.jboss.tools.runtime.soa.test.feature</module>
 	</modules>
 </project>
