@@ -1,3 +1,0 @@
-# To turn on trace logging, change below value to "true" and start application with "-debug this-directory-path/.options" 
-
-org.jboss.tools.modeshape.rest/debug=false
