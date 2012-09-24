@@ -1,8 +1,8 @@
 <site>
 	<category-def label="JBoss Application Server Adapters" name="org.eclipse.wst.server.core.serverAdapter">
 	</category-def>
-	<feature url="features/org.jboss.ide.eclipse.as.feature_2.3.0.v20120504-0300-H103-Beta3.jar" id="org.jboss.ide.eclipse.as.feature" version="2.3.0.v20120504-0300-H103-Beta3"><category name="org.eclipse.wst.server.core.serverAdapter"></category></feature>
-        <feature url="features/org.jboss.ide.eclipse.archives.feature_3.2.1.v20120504-0235-H64-Beta3.jar" id="org.jboss.ide.eclipse.archives.feature" version="3.2.1.v20120504-0235-H64-Beta3"></feature>
-        <feature url="features/org.jboss.tools.jmx.feature_1.2.0.v20120504-0232-H50-Beta3.jar" id="org.jboss.tools.jmx.feature" version="1.2.0.v20120504-0232-H50-Beta3"></feature>
+	<feature url="features/org.jboss.ide.eclipse.as.feature_2.4.0.Alpha1-v20120903-0103-H10.jar" id="org.jboss.ide.eclipse.as.feature" version="2.4.0.Alpha1-v20120903-0103-H10"><category name="org.eclipse.wst.server.core.serverAdapter"></category></feature>
+        <feature url="features/org.jboss.ide.eclipse.archives.feature_3.4.0.Alpha1-v20120903-0027-H9.jar" id="org.jboss.ide.eclipse.archives.feature" version="3.4.0.Alpha1-v20120903-0027-H9"></feature>
+        <feature url="features/org.jboss.tools.jmx.feature_1.4.0.Alpha1-v20120903-0047-H8.jar" id="org.jboss.tools.jmx.feature" version="1.4.0.Alpha1-v20120903-0047-H8"></feature>
 
 </site>
