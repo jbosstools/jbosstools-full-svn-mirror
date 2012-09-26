@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project default="doNothing">
+<project default="nothing-to-do">
 	<!-- run locally in Eclipse (to resolve p2 tasks) using these commandline options:
 	
 		-os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl} 
