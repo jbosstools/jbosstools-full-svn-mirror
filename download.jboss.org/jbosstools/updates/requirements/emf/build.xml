@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project default="mirror">
+<project default="doNothing">
 	<!-- run locally in Eclipse (to resolve p2 tasks) using these commandline options:
 	
 		-os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl} 
@@ -15,6 +15,11 @@
 			-application org.eclipse.ant.core.antRunner \
 			-f ~/RHDS/updates/requirements/emf/build.xml -Ddestination=/tmp/emf-repo
 	-->
+	
+	<target name="nothing-to-do">
+	<echo>EMF content is all on the Juno site.</echo>
+	</target>
+	
 	<target name="mirror">
 		<property name="URL1" value="http://download.eclipse.org/modeling/emf/emf/updates/2.7.x/base/R201201271122/" />
 		<property name="URL2" value="http://download.eclipse.org/modeling/emf/emf/updates/2.7.x/core/R201201300943/" />

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project default="mirror">
+<project default="doNothing">
 	<!-- run locally in Eclipse (to resolve p2 tasks) using these commandline options:
 	
 		-os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl} 
@@ -15,6 +15,11 @@
 			-application org.eclipse.ant.core.antRunner \
 			-f ~/RHDS/updates/requirements/egit/build.xml -Ddestination=/tmp/egit-repo
 	-->
+	
+	<target name="nothing-to-do">
+	<echo>egit content is all on the Juno site.</echo>
+	</target>
+	
 	<target name="mirror">
 		<property name="URL1" value="http://download.eclipse.org/egit/updates-1.3/" />
 		<property name="URL2" value="http://download.eclipse.org/egit/github/updates-1.3/" />
