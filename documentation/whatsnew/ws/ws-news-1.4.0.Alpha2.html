@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Language" content="en-us" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" href="../whatsnew.css"/>
+<title>WS Tools 3.3.0 M2 What's New</title>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17645367-5']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script></head>
+<body>
+<h1>WS tools 1.4.0.Alpha2 What's New</h1>
+
+<p align="right"><a href="../index.html">&lt; Main Index</a></p>
+
+<table border="0" cellpadding="10" cellspacing="0" width="80%">
+
+ <tr>
+    <td valign="top" align="right"><a name="itemname3"
+    id="itemname3"></a><b>JAX-RS Application Refactored</b></td>
+    <td valign="top">
+      <p>Support for JAX-RS Application has been improved in order to support the use-cases described in the specification and summarized on the <a href="https://docs.jboss.org/author/display/AS71/JAX-RS+Reference+Guide">JBoss AS 7.1 JAX-RS Reference Guide</a>
+      </p> 
+      <p>With this work done, the following use-cases are now supported:
+         <ul>
+           <li>Defining a subclass of javax.ws.rs.core.Application annotated with @javax.ws.rs.ApplicationPath</li>
+           <li>Defining a subclass of javax.ws.rs.core.Application with or without @javax.ws.rs.ApplicationPath annotation, and configuring/overriding the Application Path in the web deployment descriptor using the subclass as the servlet name</li>
+           <li>Defining the Application in the web deployment descriptor only, using javax.ws.rs.core.Application as the servlet-name.</li></p>
+      <p><small><a href="https://jira.jboss.org/browse/JBIDE-10287">Related Jira</a></small>
+         <small><a href="https://jira.jboss.org/browse/JBIDE-12633">Related Jira</a></small></p>
+
+    </td>
+ </tr>
+  
+</table>
+
+</body>
+
+</html>
+
+
