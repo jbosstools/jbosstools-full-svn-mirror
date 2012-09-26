@@ -17,11 +17,11 @@
 	-->
 	<target name="mirror">
 		<property name="URL" value="http://eclipse-cs.sf.net/update/" />
-		<property name="destination" value="/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/eclipsecs/5.5.0.201111092104/" />
+		<property name="destination" value="/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/eclipsecs/5.6.0.201209221626/" />
 		<property name="compress" value="true" />
 
 		<p2.mirror>
-			<repository location="file:${destination}/5.5.0.201111092104/" name="eclipsecs plugins for Eclipse" />
+			<repository location="file:${destination}/5.6.0.201209221626/" name="eclipsecs plugins for Eclipse" />
 			<source>
 				<repository location="${URL}" />
 			</source>
@@ -29,6 +29,6 @@
 			<slicingOptions includeFeatures="true" followStrict="true" />
 		</p2.mirror>
 
-		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/5.5.0.201111092104/" artifactRepository="file:${destination}/5.5.0.201111092104/" publishartifacts="true" source="${destination}/5.5.0.201111092104/" compress="${compress}" />
+		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/5.6.0.201209221626/" artifactRepository="file:${destination}/5.6.0.201209221626/" publishartifacts="true" source="${destination}/5.6.0.201209221626/" compress="${compress}" />
 	</target>
 </project>
