@@ -5,7 +5,7 @@
 		-os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl} 
 		-consoleLog -nosplash -data /tmp
 		-application org.eclipse.ant.core.antRunner
-		-f "/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/juno/build.xml"
+		-f "/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/kepler/build.xml"
 		
 		or, run headless on qa01 server, where Eclipse is installed into ~/eclipse:
 		
@@ -13,18 +13,18 @@
 		${JAVA_HOME}/bin/java -cp ~/eclipse/plugins/org.eclipse.equinox.launcher_*.jar \
 			org.eclipse.equinox.launcher.Main -vm ${JAVA_HOME} -consoleLog -nosplash -data /tmp \
 			-application org.eclipse.ant.core.antRunner \
-			-f ~/RHDS/updates/requirements/juno/build.xml -Ddestination=/tmp/juno-repo
+			-f ~/RHDS/updates/requirements/kepler/build.xml -Ddestination=/tmp/kepler-repo
 	-->
-	<property name="destination" value="/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/juno/" />
+	<property name="destination" value="/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/kepler/" />
 	<property name="compress" value="true" />
 	<property name="URL1" value="http://download.eclipse.org/releases/staging/" />
-	<!-- <property name="URL1" value="http://download.eclipse.org/releases/juno/201206270900/" /> -->
+	<!-- <property name="URL1" value="http://download.eclipse.org/releases/kepler/201206270900/" /> -->
 
 	<target name="run" depends="mirror,regen"/>
 	<target name="mirror">
 		<p2.mirror>
 			<!-- this did nothing to reduce the size of .blobstore <comparator><exclude><artifact><property name="format" value="packed" /></artifact></exclude></comparator> -->
-			<repository location="file:${destination}/201209031953-M/" name="Juno 201209031953-M" />
+			<repository location="file:${destination}/20120925-1520-M/" name="Kepler Staging Site (last modified / retrieved 20120925-1520-M)" />
 			<source>
 				<repository location="${URL1}"/>
 					<!-- despite the wiki, this is not allowed <properties size="1"><property name="publishPackFilesAsSiblings" value="true"/></properties>
@@ -38,8 +38,8 @@
 
 		<!-- remove OTDT patched version of o.e.jdt.core, and all other o.e.ot.otdt features/plugins; remove pack.gz files too -->
 		<delete>
-			<fileset dir="${destination}/201209031953-M/" includes="**/*.pack.gz, **/org.eclipse.jdt.core_*OTDT*.jar*, **/org.eclipse.objectteams.otdt*.jar*"/>
+			<fileset dir="${destination}/20120925-1520-M/" includes="**/*.pack.gz, **/org.eclipse.jdt.core_*OTDT*.jar*, **/org.eclipse.objectteams.otdt*.jar*"/>
 		</delete>
-		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/201209031953-M/" artifactRepository="file:${destination}/201209031953-M/" publishartifacts="true" source="${destination}/201209031953-M/" compress="${compress}" />
+		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/20120925-1520-M/" artifactRepository="file:${destination}/20120925-1520-M/" publishartifacts="true" source="${destination}/20120925-1520-M/" compress="${compress}" />
 	</target>
 </project>
