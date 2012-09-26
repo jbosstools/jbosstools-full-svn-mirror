@@ -17,13 +17,13 @@
 	-->
 	<property name="destination" value="/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/juno/" />
 	<property name="compress" value="true" />
-	<property name="URL1" value="http://download.eclipse.org/releases/maintenance/" />
-	<!-- <property name="URL1" value="http://download.eclipse.org/releases/juno/201206270900/" /> -->
+	<!-- <property name="URL1" value="http://download.eclipse.org/releases/maintenance/" /> -->
+	<property name="URL1" value="http://download.eclipse.org/releases/juno/201209280900/" />
 
 	<target name="run" depends="mirror,regen"/>
 	<target name="mirror">
 		<p2.mirror>
-			<repository location="file:${destination}/20120905-1534-M/" name="Juno 20120905-1534-M" />
+			<repository location="file:${destination}/201209280900-R/" name="Juno 201209280900-R" />
 			<source>
 				<repository location="${URL1}" />
 			</source>
@@ -35,8 +35,8 @@
 
 		<!-- remove OTDT patched version of o.e.jdt.core, and all other o.e.ot.otdt features/plugins -->
 		<delete>
-			<fileset dir="${destination}/20120905-1534-M/" includes="**/org.eclipse.jdt.core_*OTDT*.jar*, **/org.eclipse.objectteams.otdt*.jar*"/>
+			<fileset dir="${destination}/201209280900-R/" includes="**/org.eclipse.jdt.core_*OTDT*.jar*, **/org.eclipse.objectteams.otdt*.jar*"/>
 		</delete>
-		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/20120905-1534-M/" artifactRepository="file:${destination}/20120905-1534-M/" publishartifacts="true" source="${destination}/20120905-1534-M/" compress="${compress}" />
+		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/201209280900-R/" artifactRepository="file:${destination}/201209280900-R/" publishartifacts="true" source="${destination}/201209280900-R/" compress="${compress}" />
 	</target>
 </project>
