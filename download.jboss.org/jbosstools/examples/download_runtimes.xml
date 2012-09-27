@@ -1,9 +1,9 @@
 <runtimes>
 	<runtime
             id="org.jboss.tools.runtime.core.seam.230" 
-            name="JBoss Seam 2.3.0.Beta1"
-            version="2.3.0.Beta1"
-            size="128.8MB"
-            url="http://sourceforge.net/projects/jboss/files/JBoss%20Seam/2.3.0.Beta1/jboss-seam-2.3.0.Beta1-dist.zip/?use_mirror=autoselect"
+            name="JBoss Seam 2.3.0"
+            version="2.3.0"
+            size="131.4MB"
+            url=http://sourceforge.net/projects/jboss/files/JBoss%20Seam/2.3.0.Final/jboss-seam-distribution-2.3.0.Final-dist.zip/download?use_mirror=autoselect"
             disclaimer="true"/>
 </runtimes>
