@@ -10,7 +10,7 @@
         </head>
         <body>
         <h1>text test</h1>
-        <jsp:text>
+        <jsp:text id="text">
           Any Text
         </jsp:text>
         </body>

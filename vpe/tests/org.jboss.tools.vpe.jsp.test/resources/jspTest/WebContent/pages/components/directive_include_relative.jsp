@@ -10,7 +10,7 @@
         </head>
         <body>
         <h1>jsp:directive.include test with relative path</h1>
-        <jsp:directive.include file="./include.jsp"/>
+        <jsp:directive.include file="./include.jsp" id="directive_include_relative"/>
         </body>
         </html>
 </jsp:root>

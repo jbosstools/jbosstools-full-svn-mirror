@@ -10,7 +10,7 @@
         </head>
         <body>
         <h1>jsp:directive.include test with absolute path</h1>
-        <jsp:directive.include file="/pages/components/include.jsp"/>
+        <jsp:directive.include file="/pages/components/include.jsp" id="directive_include_absolute"/>
         </body>
         </html>
 </jsp:root>

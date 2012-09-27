@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
-    <jsp:directive.taglib uri="http://java.sun.com/jstl/core" prefix="c" /> 
+    <jsp:directive.taglib uri="http://java.sun.com/jstl/core" prefix="c" id="directive_taglib"/> 
 	<jsp:directive.page contentType="application/xhtml+xml; charset=UTF-8" />
 	<![CDATA[<?xml version="1.0" encoding="UTF-8"?>]]>
 	<![CDATA[<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">]]>

@@ -2,10 +2,10 @@
 <jsp:directive.taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <jsp:directive.attribute name="bookDB" required="true" type="com.sun.bookstore3.database.BookDB" %>
-<jsp:directive.attribute name="color" required="true" />
+<jsp:directive.attribute name="color" required="true" id="DirectiveAttribute" />
 <jsp:directive.attribute name="normalPrice" fragment="true" />
 <jsp:directive.attribute name="onSale" fragment="true" />
-<jsp:directive.variable name-given="price" />
+<jsp:directive.variable name-given="price" id="DirectiveVariable"/>
 <jsp:directive.variable name-given="salePrice" />
 
 <center>
@@ -24,7 +24,7 @@
   <c:set var="price" value="${book.price}" />
     <c:choose>
       <c:when test="${book.onSale}" >
-        <jsp:invoke fragment="onSale" />
+        <jsp:invoke fragment="onSale" id="Invoke"/>
       </c:when>
       <c:otherwise>
         <jsp:invoke fragment="normalPrice" />

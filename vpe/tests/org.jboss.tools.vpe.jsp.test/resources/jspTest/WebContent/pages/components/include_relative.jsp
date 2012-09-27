@@ -10,7 +10,7 @@
         </head>
         <body>
         <h1>jsp:include test with relative path</h1>
-        <jsp:include page="./include.jsp"/>
+        <jsp:include page="./include.jsp" id="include_relative"/>
         </body>
         </html>
 </jsp:root>

@@ -11,7 +11,7 @@
 	<body>
 	<h1>jsp:setProperty test</h1>
 	<jsp:useBean id="calendar" scope="page" class="org.jboss.jsp.test.Calendar" />
-	<jsp:setProperty name="calendar" property="username" value="User" />
+	<jsp:setProperty name="calendar" property="username" value="User" id="set_property"/>
 	<h2>Calendar for <jsp:getProperty name="calendar"
 		property="username" /></h2>
 	</body>

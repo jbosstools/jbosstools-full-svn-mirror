@@ -11,7 +11,7 @@
 	</head>
 	<body>
 	<h1>Scriptlet Test</h1>
-	<jsp:scriptlet>
+	<jsp:scriptlet id="scriptlet">
         out.print(new Date());
         </jsp:scriptlet>
 	</body>

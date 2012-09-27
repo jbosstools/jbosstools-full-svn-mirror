@@ -10,9 +10,9 @@
 	</head>
 	<body>
 	<h1>jsp:setProperty test</h1>
-	<jsp:useBean id="calendar" scope="page" class="org.jboss.jsp.test.Calendar" />
-	<jsp:setProperty name="calendar" property="username" value="User" />
-	<h2>Calendar for <jsp:getProperty name="calendar"
+	<jsp:useBean scope="page" class="org.jboss.jsp.test.Calendar" id="useBean"/>
+	<jsp:setProperty name="useBean" property="username" value="User" />
+	<h2>Calendar for <jsp:getProperty name="useBean"
 		property="username" /></h2>
 	</body>
 	</html>

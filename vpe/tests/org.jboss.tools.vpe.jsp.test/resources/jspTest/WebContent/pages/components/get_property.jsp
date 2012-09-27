@@ -12,7 +12,7 @@
 	<h1>jsp:getProperty test</h1>
 	<jsp:useBean id="calendar" scope="page" class="org.jboss.jsp.test.Calendar" />
 	<h2>Calendar for  <jsp:getProperty name="calendar"
-		property="username" /></h2>
+		property="username" id="get_property" /></h2>
 	</body>
 	</html>
 </jsp:root>

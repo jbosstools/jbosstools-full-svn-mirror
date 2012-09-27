@@ -10,7 +10,7 @@
         </head>
         <body>
         <h1>jsp:attribute test</h1>
-		<jsp:attribute name="user">User</jsp:attribute>
+		<jsp:attribute name="user" id="attribute">User</jsp:attribute>
         <p>User is : ${param.user}</p>
         </body>
         </html>

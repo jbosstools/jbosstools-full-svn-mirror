@@ -10,7 +10,7 @@
         </head>
         <body>
         <h1>jsp:include test with absolute path</h1>
-        <jsp:include page="/pages/components/include.jsp"/>
+        <jsp:include page="/pages/components/include.jsp" id="include_absolute"/>
         </body>
         </html>
 </jsp:root>

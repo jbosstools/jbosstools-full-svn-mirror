@@ -1,0 +1,6 @@
+<tests>
+<test id="include_relative">
+<DIV VPE:INCLUDE-ELEMENT="yes">
+</DIV>
+</test>
+</tests>

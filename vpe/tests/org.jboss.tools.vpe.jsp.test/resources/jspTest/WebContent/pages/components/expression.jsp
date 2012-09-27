@@ -11,7 +11,7 @@
         </head>
         <body>
         <h1>Expression test</h1>
-        <jsp:expression>
+        <jsp:expression id="expression">
            new Date()
         </jsp:expression>
         </body>

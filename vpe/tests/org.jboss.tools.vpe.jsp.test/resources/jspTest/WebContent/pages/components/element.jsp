@@ -8,7 +8,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title>jsp:element test</title>
         </head>
-        <jsp:element name="body">
+        <jsp:element name="body" id="element">
         <jsp:body>
         <h1>jsp:element test</h1>
         </jsp:body>

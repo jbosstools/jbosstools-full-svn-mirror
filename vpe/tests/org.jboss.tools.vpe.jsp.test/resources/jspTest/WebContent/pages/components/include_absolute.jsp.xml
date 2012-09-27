@@ -1,0 +1,6 @@
+<tests>
+<test id="include_absolute">
+<DIV VPE:INCLUDE-ELEMENT="yes">
+</DIV>
+</test>
+</tests>

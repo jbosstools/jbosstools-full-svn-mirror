@@ -11,7 +11,7 @@
         </head>
         <body>
         <h1>Declaration test</h1>
-        <jsp:declaration>
+        <jsp:declaration id="declaration">
            Date date = new Date();
         </jsp:declaration>
         <jsp:scriptlet>

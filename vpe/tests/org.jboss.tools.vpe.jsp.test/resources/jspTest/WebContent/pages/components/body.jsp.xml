@@ -1,0 +1,11 @@
+<tests>
+<test id="body">
+<DIV>
+<H1>
+<SPAN CLASS="vpe-text">
+jsp:body test
+</SPAN>
+</H1>
+</DIV>
+</test>
+</tests>

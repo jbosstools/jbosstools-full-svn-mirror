@@ -16,12 +16,17 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 public class JSPAllTests {
+	
+    // import project name
+    public static final String IMPORT_PROJECT_NAME = "jspTest"; //$NON-NLS-1$
+    
     public static Test suite() {
 		TestSuite suite = new TestSuite("Tests for Vpe JSP components"); //$NON-NLS-1$
 		// $JUnit-BEGIN$
 	
 		suite.addTestSuite(JSPComponentTest.class);
 		suite.addTestSuite(JSPTemplatePluginTest.class);
+		suite.addTestSuite(JSPComponentContentTest.class);
 		// $JUnit-END$
 		return new VpeTestSetup(suite);
     }

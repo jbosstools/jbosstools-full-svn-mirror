@@ -12,7 +12,7 @@
 	<h1>jsp:plugin test</h1>
 	<jsp:plugin type="applet" code="JavaClock.class"
 		codebase="/resources/applets" width="160"
-		height="150">
+		height="150" id="plugin">
 		<jsp:fallback>
         Plugin tag not supported.
     </jsp:fallback>

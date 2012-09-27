@@ -10,7 +10,7 @@
 	</head>
 	<body>
 	<h1>jsp:output test</h1>
-	<jsp:output doctype-root-element="html"
+	<jsp:output doctype-root-element="html" id="output"
 		doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN"
 		doctype-system="http://www.w3c.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" />
 	</body>

@@ -1,3 +1,3 @@
 <%-- double.tag --%>
-<jsp:doBody />
+<jsp:doBody id="DoBody"/>
 <jsp:doBody />
