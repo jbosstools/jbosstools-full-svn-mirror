@@ -10,9 +10,35 @@ log=/tmp/${0##*/}.log.`date +%Y%m%d-%H%M`.txt
 echo "Logfile: $log" | tee -a $log
 echo "" | tee -a $log
 
-#commandline options so we can call this by itself using `jbosstools-cleanup.sh 1 2` or call it from within publish.sh using `jbosstools-cleanup.sh 5 5`
-if [[ $1 ]] && [[ $1 -gt 0 ]]; then numbuildstokeep=$1; else numbuildstokeep=1; fi # number of builds to keep per branch
-if [[ $2 ]] && [[ $2 -gt 0 ]]; then threshholdwhendelete=$2; else threshholdwhendelete=2; fi # age at which a build is available for delete
+#commandline options so we can call this by itself using 
+#	`jbosstools-cleanup.sh -k 1 -a 2` 
+# or call it from within publish.sh using 
+# 	`jbosstools-cleanup.sh -k 5 -a 5`
+
+#defauls
+numbuildstokeep=1000 # keep X builds per branch
+threshholdwhendelete=365 # purge builds more than X days old
+dirsToScan="builds/nightly/core builds/nightly/coretests builds/nightly/soa-tooling builds/nightly/soatests builds/nightly/webtools"
+delete=1 # if 1, files will be deleted. if 0, files will be listed for delete but not actually removed
+
+if [[ $# -lt 1 ]]; then
+	echo "Usage: $0 [-k num-builds-to-keep] [-a num-days-at-which-to-delete] [-d dirs-to-scan]"
+	echo "Example (Jenkins): $0 -k 1 -a 2"
+	echo "Example (publish.sh): $0 -k 5 -a 5"
+	echo "Example: $0 -d 'updates/development/indigo/soa-tooling/modeshape/' --regen-metadata-only" 
+	exit 1;
+fi
+
+# read commandline args
+while [[ "$#" -gt 0 ]]; do
+	case $1 in
+		'-k'|'--keep') numbuildstokeep="$2"; shift 1;;
+		'-a'|'--age-to-delete') threshholdwhendelete="$2"; shift 1;;
+		'-d'|'--dirs-to-scan') dirsToScan="$2"; shift 1;;
+		'-M'|'--regen-metadata-only') delete=0; shift 0;;
+	esac
+	shift 1
+done
 
 getSubDirs () 
 {
@@ -43,12 +69,12 @@ getSubDirs ()
 # Check for $type builds more than $threshhold days old; keep minimum $numkeep builds per branch
 clean () 
 {
-	type=$1 # nightly or release
+	type=$1 # builds/nightly or updates/development/juno/soa-tooling, etc.
 	numkeep=$2 # number of builds to keep per branch
-	threshhold=$3 # age at which a build is available for delete
+	threshhold=$3 # purge builds more than $threshhold days old
 	echo "Check for $type builds more than $threshhold days old; keep minimum $numkeep builds per branch" | tee -a $log 
 
-	getSubDirs /downloads_htdocs/tools/builds/$type/ 0
+	getSubDirs /downloads_htdocs/tools/$type/ 0
 	subdirs=$getSubDirsReturn
 	for sd in $subdirs; do
 		getSubDirs $sd 1
@@ -77,14 +103,18 @@ clean ()
 			done
 			if [[ $keep -eq 0 ]]; then
 				echo -n "- $sd/$dd (${day}d)... " | tee -a $log
-				if [[ $USER == "hudson" ]]; then
-					# can't delete the dir, but can at least purge its contents
-					rm -fr /tmp/$dd; mkdir /tmp/$dd; pushd /tmp/$dd >/dev/null
-					rsync --rsh=ssh --protocol=28 -r --delete . tools@filemgmt.jboss.org:$sd/$dd 2>&1 | tee -a $log
-					echo -e "rmdir $dd" | sftp tools@filemgmt.jboss.org:$sd/
-					popd >/dev/null; rm -fr /tmp/$dd
+				if [[ $delete -eq 1 ]]; then
+					if [[ $USER == "hudson" ]]; then
+						# can't delete the dir, but can at least purge its contents
+						rm -fr /tmp/$dd; mkdir /tmp/$dd; pushd /tmp/$dd >/dev/null
+						rsync --rsh=ssh --protocol=28 -r --delete . tools@filemgmt.jboss.org:$sd/$dd 2>&1 | tee -a $log
+						echo -e "rmdir $dd" | sftp tools@filemgmt.jboss.org:$sd/
+						popd >/dev/null; rm -fr /tmp/$dd
+					fi
+					echo "" | tee -a $log
+				else
+					echo " SKIPPED."
 				fi
-				echo "" | tee -a $log
 			else
 				echo "+ $sd/$dd (${day}d)" | tee -a $log
 			fi
@@ -152,6 +182,6 @@ regenCompositeMetadata ()
 }
 
 # now that we have all the methods and vars defined, let's do some cleaning!
-for dir in nightly/core nightly/coretests nightly/soa-tooling nightly/soatests nightly/webtools; do
+for dir in $dirsToScan; do
 	clean $dir $numbuildstokeep $threshholdwhendelete
 done
