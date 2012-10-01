@@ -20,6 +20,7 @@ numbuildstokeep=1000 # keep X builds per branch
 threshholdwhendelete=365 # purge builds more than X days old
 dirsToScan="builds/nightly/core builds/nightly/coretests builds/nightly/soa-tooling builds/nightly/soatests builds/nightly/webtools"
 delete=1 # if 1, files will be deleted. if 0, files will be listed for delete but not actually removed
+checkTimeStamps=1 # if 1, check for timestamped folders, eg., 2012-09-30_04-01-36-H5622 and deduce the age from name. if 0, skip name-to-age parsing and delete nothing
 
 if [[ $# -lt 1 ]]; then
 	echo "Usage: $0 [-k num-builds-to-keep] [-a num-days-at-which-to-delete] [-d dirs-to-scan]"
@@ -35,7 +36,7 @@ while [[ "$#" -gt 0 ]]; do
 		'-k'|'--keep') numbuildstokeep="$2"; shift 1;;
 		'-a'|'--age-to-delete') threshholdwhendelete="$2"; shift 1;;
 		'-d'|'--dirs-to-scan') dirsToScan="$2"; shift 1;;
-		'-M'|'--regen-metadata-only') delete=0; shift 0;;
+		'-M'|'--regen-metadata-only') delete=0; checkTimeStamps=0; shift 0;;
 	esac
 	shift 1
 done
@@ -82,43 +83,45 @@ clean ()
 		#echo $subsubdirs
 		tmp=`mktemp`
 		for ssd in $subsubdirs; do
-			if [[ ${ssd##$sd/201*} == "" ]]; then # a build dir
+			if [[ ${ssd##$sd/201*} == "" ]] || [[ $checkTimeStamps -eq 0 ]]; then # a build dir
 				buildid=${ssd##*/};  
 				echo $buildid >> $tmp
 			fi
 		done
-		newest=$(cat $tmp | sort -r | head -$numkeep) # keep these
-		all=$(cat $tmp | sort -r) # check these
-		rm -f $tmp
-		for dd in $all; do
-			keep=0;
-			# sec=$(date -d "$(echo $dd | perl -pe "s/(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})/\1-\2-\3\ \4:\5/")" +%s) # convert buildID (folder) to timestamp, then to # seconds since epoch ## OLD FOLDER FORMAT
-			sec=$(date -d "$(echo $dd | perl -pe "s/(\d{4})-(\d{2})-(\d{2})_(\d{2})-(\d{2})-(\d{2})-H(\d+)/\1-\2-\3\ \4:\5:\6/")" +%s) # convert buildID (folder) to timestamp, then to # seconds since epoch ## NEW FOLDER FORMAT
-			(( day = now - sec )) 
-			(( day = day / 3600 / 24 ))
-			for n in $newest; do
-				if [[ $dd == $n ]] || [[ $day -le $threshhold ]]; then
-					keep=1
+		if [[ $checkTimeStamps -eq 1 ]]; then
+			newest=$(cat $tmp | sort -r | head -$numkeep) # keep these
+			all=$(cat $tmp | sort -r) # check these
+			rm -f $tmp
+			for dd in $all; do
+				keep=0;
+				# sec=$(date -d "$(echo $dd | perl -pe "s/(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})/\1-\2-\3\ \4:\5/")" +%s) # convert buildID (folder) to timestamp, then to # seconds since epoch ## OLD FOLDER FORMAT
+				sec=$(date -d "$(echo $dd | perl -pe "s/(\d{4})-(\d{2})-(\d{2})_(\d{2})-(\d{2})-(\d{2})-H(\d+)/\1-\2-\3\ \4:\5:\6/")" +%s) # convert buildID (folder) to timestamp, then to # seconds since epoch ## NEW FOLDER FORMAT
+				(( day = now - sec )) 
+				(( day = day / 3600 / 24 ))
+				for n in $newest; do
+					if [[ $dd == $n ]] || [[ $day -le $threshhold ]]; then
+						keep=1
+					fi
+				done
+				if [[ $keep -eq 0 ]]; then
+					echo -n "- $sd/$dd (${day}d)... " | tee -a $log
+					if [[ $delete -eq 1 ]]; then
+						if [[ $USER == "hudson" ]]; then
+							# can't delete the dir, but can at least purge its contents
+							rm -fr /tmp/$dd; mkdir /tmp/$dd; pushd /tmp/$dd >/dev/null
+							rsync --rsh=ssh --protocol=28 -r --delete . tools@filemgmt.jboss.org:$sd/$dd 2>&1 | tee -a $log
+							echo -e "rmdir $dd" | sftp tools@filemgmt.jboss.org:$sd/
+							popd >/dev/null; rm -fr /tmp/$dd
+						fi
+						echo "" | tee -a $log
+					else
+						echo " SKIPPED."
+					fi
+				else
+					echo "+ $sd/$dd (${day}d)" | tee -a $log
 				fi
 			done
-			if [[ $keep -eq 0 ]]; then
-				echo -n "- $sd/$dd (${day}d)... " | tee -a $log
-				if [[ $delete -eq 1 ]]; then
-					if [[ $USER == "hudson" ]]; then
-						# can't delete the dir, but can at least purge its contents
-						rm -fr /tmp/$dd; mkdir /tmp/$dd; pushd /tmp/$dd >/dev/null
-						rsync --rsh=ssh --protocol=28 -r --delete . tools@filemgmt.jboss.org:$sd/$dd 2>&1 | tee -a $log
-						echo -e "rmdir $dd" | sftp tools@filemgmt.jboss.org:$sd/
-						popd >/dev/null; rm -fr /tmp/$dd
-					fi
-					echo "" | tee -a $log
-				else
-					echo " SKIPPED."
-				fi
-			else
-				echo "+ $sd/$dd (${day}d)" | tee -a $log
-			fi
-		done
+		fi
 
 		# generate metadata in the nightly/core/trunk/ folder to composite the remaining sites into one
 		getSubDirs $sd 1; #return #getSubDirsReturn
@@ -126,7 +129,7 @@ clean ()
 		#echo $subsubdirs
 		tmp=`mktemp`
 		for ssd in $subsubdirs; do
-			if [[ ${ssd##$sd/201*} == "" ]]; then # a build dir
+			if [[ ${ssd##$sd/201*} == "" ]] || [[ $checkTimeStamps -eq 0 ]]; then # a build dir
 				buildid=${ssd##*/};  
 				echo $buildid >> $tmp
 			fi
