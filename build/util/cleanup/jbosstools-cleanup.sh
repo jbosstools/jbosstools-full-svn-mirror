@@ -10,10 +10,12 @@ log=/tmp/${0##*/}.log.`date +%Y%m%d-%H%M`.txt
 echo "Logfile: $log" | tee -a $log
 echo "" | tee -a $log
 
-#commandline options so we can call this by itself using 
-#	`jbosstools-cleanup.sh -k 1 -a 2` 
-# or call it from within publish.sh using 
-# 	`jbosstools-cleanup.sh -k 5 -a 5`
+# commandline options so we can call it from jbosstools-cleanup Jenkins job using 
+#	`jbosstools-cleanup.sh -k 1 -a 2 -S /all/repo/` 
+# or call it from within publish.sh using
+# 	`jbosstools-cleanup.sh -k 5 -a 5 -S /all/repo/`
+# or call it from within promote.sh using
+# 	`jbosstools-cleanup.sh --dirs-to-scan "updates/${BUILD_TYPE}/${TARGET_PLATFORM}/${PARENT_FOLDER}" --regen-metadata-only`
 
 #defauls
 numbuildstokeep=1000 # keep X builds per branch
@@ -21,12 +23,13 @@ threshholdwhendelete=365 # purge builds more than X days old
 dirsToScan="builds/nightly/core builds/nightly/coretests builds/nightly/soa-tooling builds/nightly/soatests builds/nightly/webtools"
 delete=1 # if 1, files will be deleted. if 0, files will be listed for delete but not actually removed
 checkTimeStamps=1 # if 1, check for timestamped folders, eg., 2012-09-30_04-01-36-H5622 and deduce the age from name. if 0, skip name-to-age parsing and delete nothing
+childFolderSuffix="/" # for component update sites, set to "/"; for aggregate builds (not update sites) use "/all/repo/"
 
 if [[ $# -lt 1 ]]; then
-	echo "Usage: $0 [-k num-builds-to-keep] [-a num-days-at-which-to-delete] [-d dirs-to-scan]"
-	echo "Example (Jenkins): $0 -k 1 -a 2"
-	echo "Example (publish.sh): $0 -k 5 -a 5"
-	echo "Example: $0 -d 'updates/development/indigo/soa-tooling/modeshape/' --regen-metadata-only" 
+	echo "Usage: $0 [-k num-builds-to-keep] [-a num-days-at-which-to-delete] [-d dirs-to-scan] [--regen-metadata-only] [--childFolderSuffix /all/repo/]"
+	echo "Example (Jenkins job): $0 --keep 1 --age-to-delete 2 --childFolderSuffix /all/repo/"
+	echo "Example (publish.sh):  $0 -k 5 -a 5 -S /all/repo/"
+	echo "Example (promote.sh):  $0 --dirs-to-scan 'updates/integration/indigo/soa-tooling/' --regen-metadata-only" 
 	exit 1;
 fi
 
@@ -37,6 +40,7 @@ while [[ "$#" -gt 0 ]]; do
 		'-a'|'--age-to-delete') threshholdwhendelete="$2"; shift 1;;
 		'-d'|'--dirs-to-scan') dirsToScan="$2"; shift 1;;
 		'-M'|'--regen-metadata-only') delete=0; checkTimeStamps=0; shift 0;;
+		'-S'|'--childFolderSuffix') childFolderSuffix="$2"
 	esac
 	shift 1
 done
@@ -177,7 +181,7 @@ regenCompositeMetadata ()
 <properties size='2'><property name='p2.timestamp' value='${now}'/><property name='p2.compressed' value='true'/></properties>
 <children size='${countChildren}'>" > ${fileName}
 	for ssd in $subsubdirs; do
-		echo "<child location='${ssd}/all/repo/'/>" >> ${fileName}
+		echo "<child location='${ssd}${childFolderSuffix}'/>" >> ${fileName}
 	done
 	echo "</children>
 </repository>
