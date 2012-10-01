@@ -145,8 +145,9 @@ clean ()
 		if [[ $getListSizeReturn -gt 0 ]]; then
 			echo "Generate metadata for ${getListSizeReturn} subdir(s) in $sd/" | tee -a $log	
 			mkdir -p /tmp/cleanup-fresh-metadata/
-			regenCompositeMetadata "$all" "$getListSizeReturn" "org.eclipse.equinox.internal.p2.metadata.repository.CompositeMetadataRepository" "/tmp/cleanup-fresh-metadata/compositeContent.xml"
-			regenCompositeMetadata "$all" "$getListSizeReturn" "org.eclipse.equinox.internal.p2.artifact.repository.CompositeArtifactRepository" "/tmp/cleanup-fresh-metadata/compositeArtifacts.xml"
+			siteName=${sd##*/downloads_htdocs/tools/}
+			regenCompositeMetadata "$siteName" "$all" "$getListSizeReturn" "org.eclipse.equinox.internal.p2.metadata.repository.CompositeMetadataRepository" "/tmp/cleanup-fresh-metadata/compositeContent.xml"
+			regenCompositeMetadata "$siteName" "$all" "$getListSizeReturn" "org.eclipse.equinox.internal.p2.artifact.repository.CompositeArtifactRepository" "/tmp/cleanup-fresh-metadata/compositeArtifacts.xml"
 			rsync --rsh=ssh --protocol=28 -q /tmp/cleanup-fresh-metadata/composite*.xml tools@filemgmt.jboss.org:$sd/
 			rm -fr /tmp/cleanup-fresh-metadata/
 		else
@@ -170,14 +171,15 @@ getListSize ()
 #regen metadata for remaining subdirs in this folder
 regenCompositeMetadata ()
 {
-	subsubdirs=$1
-	countChildren=$2
-	fileType=$3
-	fileName=$4
+	siteName=$1
+	subsubdirs=$2
+	countChildren=$3
+	fileType=$4
+	fileName=$5
 	now=$(date +%s000)
 	
 	echo "<?xml version='1.0' encoding='UTF-8'?><?compositeArtifactRepository version='1.0.0'?>
-<repository name='JBoss Tools Builds - ${type}' type='${fileType}' version='1.0.0'>
+<repository name='JBoss Tools Builds - ${siteName}' type='${fileType}' version='1.0.0'>
 <properties size='2'><property name='p2.timestamp' value='${now}'/><property name='p2.compressed' value='true'/></properties>
 <children size='${countChildren}'>" > ${fileName}
 	for ssd in $subsubdirs; do
