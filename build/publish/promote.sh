@@ -6,7 +6,7 @@ DESTINATION=tools@filemgmt.jboss.org:/downloads_htdocs/tools/
 OPERATION=COPY
 
 if [[ $# -lt 1 ]]; then
-  echo "Usage  : $0 -BUILD_TYPE build_type -TARGET_PLATFORM target_platform -PROJECT_NAME project_name -TARGET_FOLDER target_folder -SOURCE_PATH SOURCE_PATH"
+  echo "Usage  : $0 -BUILD_TYPE build_type -TARGET_PLATFORM target_platform -PROJECT_NAME project_name -TARGET_FOLDER target_folder -SOURCE_PATH source_path"
   echo "Example: $0 -BUILD_TYPE integration -TARGET_PLATFORM juno -PROJECT_NAME base -TARGET_FOLDER as_4.0.juno -SOURCE_PATH jbosstools-4.0_stable_branch.component--as/all/repo"
   echo "Example: $0 -BUILD_TYPE integration -TARGET_PLATFORM juno -PROJECT_NAME base -TARGET_FOLDER archives_4.0.juno -SOURCE_PATH jbosstools-4.0_stable_branch.component--archives/all/repo"
   echo "Example: $0 -BUILD_TYPE integration -TARGET_PLATFORM juno -PROJECT_NAME base -TARGET_FOLDER jmx_4.0.juno -SOURCE_PATH jbosstools-4.0_stable_branch.component--jmx/all/repo"
