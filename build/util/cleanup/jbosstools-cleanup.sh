@@ -63,7 +63,7 @@ getSubDirs ()
 	dirs=$(sftp -b $tmp tools@filemgmt.jboss.org 2>/dev/null)
 	i=0
 	for c in $dirs; do
-		if [[ $i -gt 2 ]] && [[ $c != "sftp>" ]] && [[ ${c##*.} != "" ]]; then # valid dir
+		if [[ $i -gt 2 ]] && [[ $c != "sftp>" ]] && [[ ${c##*.} != "" ]] && [[ ${c##*/*.*ml} != "" ]]; then # valid dir; exclude *.xml, *.html files
 			getSubDirsReturn=$getSubDirsReturn" "$c
 		fi
 		(( i++ ))
