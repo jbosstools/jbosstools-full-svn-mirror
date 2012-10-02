@@ -2,7 +2,7 @@
 # Hudson script used to publish Tycho-built p2 update sites
 # NOTE: sources MUST be checked out into ${WORKSPACE}/sources 
 
-# to use timestamp when naming dirs instead of ${BUILD_ID}-H${BUILD_NUMBER}, use:
+# to use timestamp when naming dirs instead of ${BUILD_ID}-B${BUILD_NUMBER}, use:
 # BUILD_ID=2010-08-31_19-16-10; timestamp=$(echo $BUILD_ID | tr -d "_-"); timestamp=${timestamp:0:12}; echo $timestamp; # 201008311916
 
 #set up tmpdir
@@ -20,7 +20,7 @@ JOBNAMEREDUX=${JOB_NAME/.aggregate}; JOBNAMEREDUX=${JOBNAMEREDUX/jbosstools-}
 
 # releases get named differently than snapshots
 if [[ ${RELEASE} == "Yes" ]]; then
-	ZIPSUFFIX="${BUILD_ID}-H${BUILD_NUMBER}"
+	ZIPSUFFIX="${BUILD_ID}-B${BUILD_NUMBER}"
 else
 	ZIPSUFFIX="SNAPSHOT"
 fi
@@ -75,6 +75,9 @@ mkdir -p ${STAGINGDIR}/logs
 bl=${STAGINGDIR}/logs/BUILDLOG.txt
 rm -f ${bl}; wget -q http://hudson.qa.jboss.com/hudson/job/${JOB_NAME}/${BUILD_NUMBER}/consoleText -O ${bl} --timeout=900 --wait=10 --random-wait --tries=10 --retry-connrefused --no-check-certificate
 
+# calculate BUILD_ALIAS from parent pom version as recorded in the build log, eg., from org/jboss/tools/parent/4.0.0.Alpha2-SNAPSHOT get Alpha2
+BUILD_ALIAS=$(cat ${bl} | grep "org/jboss/tools/parent/" | head -1 | sed -e "s#.\+org/jboss/tools/parent/\(.\+\)/\(maven-metadata.xml\|parent.\+\)#\1#" | sed -e "s#-SNAPSHOT##" | sed -e "s#[0-9].[0-9].[0-9].##")
+
 # JBDS-1361 - fetch XML and then sed it into plain text
 wgetParams="--timeout=900 --wait=10 --random-wait --tries=30 --retry-connrefused --no-check-certificate --server-response"
 rl=${STAGINGDIR}/logs/REVISION
@@ -97,10 +100,11 @@ else
 	echo "UNKNOWN REVISION(S)" > ${rl}.txt
 fi
 
-METAFILE="${BUILD_ID}-H${BUILD_NUMBER}.txt"
+METAFILE="${BUILD_ID}-B${BUILD_NUMBER}.txt"
 touch ${STAGINGDIR}/logs/${METAFILE}
 METAFILE=build.properties
 
+echo "BUILD_ALIAS = ${BUILD_ALIAS}" >> ${STAGINGDIR}/logs/${METAFILE}
 echo "JOB_NAME = ${JOB_NAME}" >> ${STAGINGDIR}/logs/${METAFILE}
 echo "BUILD_NUMBER = ${BUILD_NUMBER}" >> ${STAGINGDIR}/logs/${METAFILE}
 echo "BUILD_ID = ${BUILD_ID}" >> ${STAGINGDIR}/logs/${METAFILE}
@@ -279,7 +283,7 @@ if [[ ${JOB_NAME/.aggregate} != ${JOB_NAME} ]]; then
 
 	export JAVA_HOME=$(find /qa/tools/opt -maxdepth 1 -mindepth 1 -type d -name "jdk1.6.0_*" | sort | tail -1)
 	export M2_HOME=$(find /qa/tools/opt -maxdepth 1 -mindepth 1 -type d -name "apache-maven-3.0.*" | sort | tail -1)
-	${M2_HOME}/bin/mvn -q -B install -DJOB_NAME=${JOB_NAME} -DBUILD_NUMBER=${BUILD_NUMBER} -DBUILD_ID=${BUILD_ID}
+	${M2_HOME}/bin/mvn -q -B install -DJOB_NAME=${JOB_NAME} -DBUILD_NUMBER=${BUILD_NUMBER} -DBUILD_ID=${BUILD_ID} -DBUILD_ALIAS=${BUILD_ALIAS}
 	mv target/index.html ${STAGINGDIR}/index.html; rm -fr target
 	popd >/dev/null
 fi
@@ -319,7 +323,7 @@ if [[ $ec == "0" ]] && [[ $fc == "0" ]]; then
 		
 		# if an aggregate build, put output elsewhere on disk
 		if [[ ${JOB_NAME/.aggregate} != ${JOB_NAME} ]]; then
-			echo "<meta http-equiv=\"refresh\" content=\"0;url=${BUILD_ID}-H${BUILD_NUMBER}/\">" > $tmpdir/latestBuild.html
+			echo "<meta http-equiv=\"refresh\" content=\"0;url=${BUILD_ID}-B${BUILD_NUMBER}/\">" > $tmpdir/latestBuild.html
 			if [[ ${PUBLISHPATHSUFFIX} ]]; then
 				date
 				# create folders if not already there
@@ -328,17 +332,17 @@ if [[ $ec == "0" ]] && [[ $fc == "0" ]]; then
 				else
 					mkdir -p $DESTINATION/builds/nightly/${PUBLISHPATHSUFFIX}
 				fi
-				date; rsync -arzq --protocol=28 --delete ${STAGINGDIR}/* $DESTINATION/builds/nightly/${PUBLISHPATHSUFFIX}/${BUILD_ID}-H${BUILD_NUMBER}/
+				date; rsync -arzq --protocol=28 --delete ${STAGINGDIR}/* $DESTINATION/builds/nightly/${PUBLISHPATHSUFFIX}/${BUILD_ID}-B${BUILD_NUMBER}/
 				# sftp only works with user@server, not with local $DESTINATIONS, so use rsync to push symlink instead
-				# echo -e "rm latest\nln ${BUILD_ID}-H${BUILD_NUMBER} latest" | sftp ${DESTINATIONREDUX}/builds/nightly/${PUBLISHPATHSUFFIX}/ 
-				pushd $tmpdir >/dev/null; ln -s ${BUILD_ID}-H${BUILD_NUMBER} latest; rsync --protocol=28 -l latest ${DESTINATION}/builds/nightly/${PUBLISHPATHSUFFIX}/; rm -f latest; popd >/dev/null
+				# echo -e "rm latest\nln ${BUILD_ID}-B${BUILD_NUMBER} latest" | sftp ${DESTINATIONREDUX}/builds/nightly/${PUBLISHPATHSUFFIX}/ 
+				pushd $tmpdir >/dev/null; ln -s ${BUILD_ID}-B${BUILD_NUMBER} latest; rsync --protocol=28 -l latest ${DESTINATION}/builds/nightly/${PUBLISHPATHSUFFIX}/; rm -f latest; popd >/dev/null
 				date; rsync -arzq --protocol=28 --delete $tmpdir/latestBuild.html $DESTINATION/builds/nightly/${PUBLISHPATHSUFFIX}/
 			else
 				date; rsync -arzq --protocol=28 --delete $tmpdir/latestBuild.html $DESTINATION/builds/nightly/${JOBNAMEREDUX}/ 
 				# sftp only works with user@server, not with local $DESTINATIONS, so use rsync to push symlink instead
-				# echo -e "rm latest\nln ${BUILD_ID}-H${BUILD_NUMBER} latest" | sftp ${DESTINATIONREDUX}/builds/nightly/${JOBNAMEREDUX}/
-				pushd $tmpdir >/dev/null; ln -s ${BUILD_ID}-H${BUILD_NUMBER} latest; rsync --protocol=28 -l latest ${DESTINATION}/builds/nightly/${JOBNAMEREDUX}/; rm -f latest; popd >/dev/null
-				date; rsync -arzq --protocol=28 --delete ${STAGINGDIR}/* $DESTINATION/builds/nightly/${JOBNAMEREDUX}/${BUILD_ID}-H${BUILD_NUMBER}/
+				# echo -e "rm latest\nln ${BUILD_ID}-B${BUILD_NUMBER} latest" | sftp ${DESTINATIONREDUX}/builds/nightly/${JOBNAMEREDUX}/
+				pushd $tmpdir >/dev/null; ln -s ${BUILD_ID}-B${BUILD_NUMBER} latest; rsync --protocol=28 -l latest ${DESTINATION}/builds/nightly/${JOBNAMEREDUX}/; rm -f latest; popd >/dev/null
+				date; rsync -arzq --protocol=28 --delete ${STAGINGDIR}/* $DESTINATION/builds/nightly/${JOBNAMEREDUX}/${BUILD_ID}-B${BUILD_NUMBER}/
 			fi
 			rm -f $tmpdir/latestBuild.html
 		#else
@@ -482,7 +486,7 @@ if [[ ${JOB_NAME/.aggregate} != ${JOB_NAME} ]]; then
 	# regenerate http://download.jboss.org/jbosstools/builds/nightly/*/*/composite*.xml files for up to 5 builds, cleaning anything older than 5 days old
 	wget http://anonsvn.jboss.org/repos/jbosstools/trunk/build/util/cleanup/jbosstools-cleanup.sh --no-check-certificate
 	chmod +x jbosstools-cleanup.sh
-	./jbosstools-cleanup.sh 5 5
+	./jbosstools-cleanup.sh --keep 5 --age-to-delete 5 --childFolderSuffix /all/repo/
 	rm -f jbosstools-cleanup.sh
 fi
 
