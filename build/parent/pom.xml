@@ -580,6 +580,31 @@
 			</build>
 		</profile>
 
+		<!-- Target platform file pointing at a single update site located
+			from Jenkins filesystem (mirrored unified.target for performances) -->
+		<profile>
+			<id>jenkins.target</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.eclipse.tycho</groupId>
+						<artifactId>target-platform-configuration</artifactId>
+						<version>${tychoVersion}</version>
+						<configuration>
+							<target>
+								<artifact>
+									<groupId>org.jboss.tools.target-platforms</groupId>
+									<artifactId>jenkins</artifactId>
+									<version>${JBT_VERSION}.${BUILD_ALIAS}-SNAPSHOT</version>
+									<classifier>jenkins</classifier>
+								</artifact>
+							</target>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
 		<!-- To use this profile, must have first created a local.target file,
 			which points to a local repo. You can do this by hand or generate it from
 			multiple.target using: cd ~/trunk/build/target-platform; ant See also the
@@ -636,7 +661,7 @@
 		</profile>
 
 		<profile>
-			<!-- JBIDE-12455 -->
+			<!-- JBIDE-12455 , necessary because of XulRunner doesn't support 64bits OSX -->
 			<id>applejdk</id>
 			<activation>
 				<property>
@@ -650,29 +675,31 @@
 		</profile>
 
 		<profile>
-                	<id>osx</id>
-                        <activation>
-                        	<os>
-                                	<family>mac</family>
-                                </os>
-                        </activation>
-                        <properties>
-                        	<!-- THE FOLLOWING LINE MUST NOT BE BROKEN BY AUTOFORMATTING -->
-                                <platformSystemProperties> -XstartOnFirstThread </platformSystemProperties>
-                        </properties>
-                        <!-- This is required to have it working by default under mac osx for swtbot tests -->
-                        <repositories>
-                        	<repository>
-                                	<id>jbosstools-target-site</id>
-                                        <url>${jbosstools-target-site}</url>
+			<!-- Workaround for https://bugs.eclipse.org/bugs/show_bug.cgi?id=388084 -->
+			<id>osx</id>
+			<activation>
+				<os>
+					<family>mac</family>
+				</os>
+			</activation>
+			<properties>
+				<!-- THE FOLLOWING LINE MUST NOT BE BROKEN BY AUTOFORMATTING -->
+				<platformSystemProperties> -XstartOnFirstThread </platformSystemProperties>
+			</properties>
+			<!-- This is required to have it working by default under mac osx for swtbot tests -->
+			<!-- Or better is to use "-Posx,default" -->
+			<repositories>
+				<repository>
+					<id>jbosstools-target-site</id>
+					<url>${jbosstools-target-site}</url>
 					<layout>p2</layout>
-                                        <snapshots>
-                                        	<enabled>true</enabled>
-                                        </snapshots>
-                                        <releases>
-                                        	<enabled>true</enabled>
-                                        </releases>
-                        	</repository>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
 			</repositories>
 		</profile>
 
@@ -700,6 +727,7 @@
 				</plugins>
 			</build>
 		</profile>
+		
 		<profile>
 			<id>coverage</id>
 			<activation>
