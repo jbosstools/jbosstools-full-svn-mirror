@@ -13,7 +13,6 @@
 		<description>
 This is your project! It's a sample, deployable Maven 3 project to help you get your foot in the door developing with Java EE 6 on JBoss Enterprise Application Platform 6 or JBoss Application Server 7.1.
 This project is setup to allow you to create a compliant Java EE 6 application using JSF 2.0, CDI 1.0, EJB 3.1, JPA 2.0 and Bean Validation 1.0.
-This project is based on the org.jboss.spec.archetypes:jboss-javaee6-webapp-archetype:7.1.1.CR1 Maven archetype.
 		</description>
 		<size>8192</size>
 		<url/>
@@ -72,10 +71,7 @@ This project is based on the org.jboss.spec.archetypes:jboss-javaee6-webapp-arch
 		<included-projects>multi-javaee6-archetype</included-projects>
 		<shortDescription>Java EE Project</shortDescription>
         <priority>2</priority>
-		<description>An archetype that generates a starter Java EE 6 webapp project for JBoss Enterprise Application Platform 6 or JBoss Application Server. The project is an EAR, with an EJB-JAR and WAR.
-            
-This project is based on the org.jboss.spec.archetypes:jboss-javaee6-webapp-ear-archetype:7.1.1.CR1 Maven archetype.
-        </description>
+		<description>An archetype that generates a starter Java EE 6 webapp project for JBoss Enterprise Application Platform 6 or JBoss Application Server. The project is an EAR, with an EJB-JAR and WAR.</description>
 		<size>13806</size>
 		<url/>
 		<stacksId>jboss-javaee6-webapp-ear-archetype</stacksId>
@@ -131,12 +127,10 @@ This project is based on the org.jboss.spec.archetypes:jboss-javaee6-webapp-ear-
 		<included-projects>jboss-javaee6-poh5</included-projects>
 		<shortDescription>HTML5 Project</shortDescription>
         <priority>3</priority>
-		<description>An archetype that generates a Java EE 6 HTML5 Mobile Webapp project for JBoss Enterprise Application Platform 6 or JBoss Application Server 7.1
-
-This project is based on the org.jboss.aerogear.archetypes:jboss-html5-mobile-archetype:1.0.0.M5 Maven archetype.
-            </description>
+		<description>An archetype that generates a Java EE 6 HTML5 Mobile Webapp project for JBoss Enterprise Application Platform 6 or JBoss Application Server 7.1</description>
 		<size>165567</size>
 		<url/>
+        <stacksId>jboss-html5-mobile-archetype</stacksId>
 		<fixes>
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.71, org.jboss.ide.eclipse.as.runtime.eap.60</property>
@@ -188,11 +182,10 @@ This project is based on the org.jboss.aerogear.archetypes:jboss-html5-mobile-ar
 		<included-projects>richfaces-archetype-simpleapp</included-projects>
 		<shortDescription>RichFaces Project</shortDescription>
         <priority>4</priority>
-		<description>An archetype that generates a simple Richfaces application
-            
-This project is based on the org.richfaces.archetypes:richfaces-archetype-kitchensink:4.2.2.Final-2 Maven archetype.</description>
+		<description>An archetype that generates a simple Richfaces application</description>
 		<size>165567</size>
 		<url/>
+        <stacksId>richfaces-archetype-kitchensink</stacksId>
 		<fixes>
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.71, org.jboss.ide.eclipse.as.runtime.eap.60</property>
@@ -255,9 +248,7 @@ This project is based on the org.richfaces.archetypes:richfaces-archetype-kitche
 		<included-projects>spring-mvc-webapp</included-projects>
 		<shortDescription>Spring MVC Project</shortDescription>
         <priority>5</priority>
-		<description>An archetype that generates a starter Spring MVC application with Java EE persistence settings (server bootstrapped JPA, JTA transaction management) for JBoss Enterprise Application Platform 6 or JBoss Application Server 7.1
-            
-This project is based on the org.jboss.spring.archetypes:spring-mvc-webapp:1.0.0.CR6 Maven archetype.</description>
+		<description>An archetype that generates a starter Spring MVC application with Java EE persistence settings (server bootstrapped JPA, JTA transaction management) for JBoss Enterprise Application Platform 6 or JBoss Application Server 7.1</description>
 		<size>165567</size>
 		<url/>
 		<fixes>
@@ -315,11 +306,10 @@ This project is based on the org.jboss.spring.archetypes:spring-mvc-webapp:1.0.0
         <priority>6</priority>
 		<shortDescription>GWT Web Project</shortDescription>
 		<description>An archetype that generates a starter GWT application with Java EE 6 and Errai. 
-Make sure you read the deployment instructions in README.md.
-
-This project is based on the org.jboss.errai.archetypes:jboss-errai-kitchensink-archetype:2.0.0.Final Maven archetype.</description>
+Make sure you read the deployment instructions in README.md.</description>
 		<size>165567</size>
 		<url/>
+        <stacksId>jboss-errai-kitchensink-archetype</stacksId>
 		<fixes>
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.70, org.jboss.ide.eclipse.as.runtime.71, org.jboss.ide.eclipse.as.runtime.eap.60</property>
