@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Language" content="en-us" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" href="../whatsnew.css"/>
+<title>Examples 4.0.0.Alpha2 What's New</title>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17645367-5']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script></head>
+<body>
+<h1>Examples 4.0.0.Alpha2 What's New</h1>
+<p align="right"><a
+href="../vpe/vpe-news-4.0.0.Alpha2.html">&lt; Visual Editor</a>   <a href="../index.html"> Main Index &gt;</a>
+</p>
+
+<table border="0" cellpadding="10" cellspacing="0" width="80%">
+  <tr>
+    <td colspan="2">
+      <hr/>
+      <h3>Project Examples</h3>
+	<hr/>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" align="left">
+       <a name="wizard" id="wizard"></a><b>Revamped Wizard for Maven Archetypes</b>
+    </td>
+    <td width="70%" valign="top">
+    <p>For project examples based on Maven archetypes, we now rely on the <a href="JBIDE-12472">JBoss Developer Framework Stacks</a> descriptor 
+    to provide the most appropriate version of an archetype, depending on the target runtime you select.
+    </p>
+    <p>
+    This also allows us to provide "blank" versions of archetypes, if you prefer to start creating project with no demo code. 
+    You can see what archetype version is used when checking "Create a blank project". 
+    This option is currently only available for the Java EE and Java EE Web projects, but we will be able to enable it for other project 
+    types in the near future.
+    
+    </p>
+    <img src="images/archetypes_blank.png" alt="new blank archetype"/>
+    <p>If the recommended runtime is not configured in your workspace, you now have the possibility of choosing the version you want to download
+    </p>
+    <img src="images/archetypes_select_runtime.png" alt="Select runtime"/>
+
+    <p><small>related JIRAs : <a href="https://issues.jboss.org/browse/JBIDE-12472">JBIDE-12472</a>,
+        <a href="https://issues.jboss.org/browse/JBIDE-12166">JBIDE-12166</a>, <a href="https://issues.jboss.org/browse/JBIDE-12254">JBIDE-12254</a>	 </small></p>
+    </td>
+  </tr>
+  <tr>
+		<td colspan="2">
+		<hr />
+		</td>
+	</tr>
+</table>
+
+</body>
+
+</html>
