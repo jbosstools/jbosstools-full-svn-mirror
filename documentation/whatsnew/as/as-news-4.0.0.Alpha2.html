@@ -1,0 +1,177 @@
+<html>
+
+<head>
+<link rel="stylesheet" href="../whatsnew.css">
+<title>JBoss AS Tools 4.0.0.Alpha2 News</title>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17645367-5']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script></head>
+
+<body>
+
+<h1>JBoss AS Tools 4.0.0.Alpha2 What's New</h1>
+
+  <p align="right"><a href="../index.html">&lt; Main Index</a> <a
+href="../cdi/cdi-news-4.0.0.Alpha2.html">CDI Tools&gt;</a></p>
+<table border="0" cellpadding="10" cellspacing="0" width="80%">
+
+	<tr>
+		<td colspan="2">
+		<hr />
+		<h3>Downloading JBoss Runtimes</h3>
+		<hr />
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" align="left">
+			<p><b>New Runtime Wizard allows app-server downloads</b></p>
+		</td>
+        <td align="top">
+			<p>
+				The new runtime wizard now links in with the runtime component's ability to download an application server runtime and initialize the server that corresponds to it. The dialog will be filtered to only show runtimes that match the server runtime being created.
+			</p>
+			<p><img src="images/astools-4.0.0.alpha2-download.png"/></p>
+				<small>
+					<a href="https://issues.jboss.org/browse/JBIDE-6116">Related Jira</a>
+				</small><br/>
+			</p>
+		</td>
+	</tr>
+        <tr>
+                <td colspan="2">
+                <hr />
+                <h3>Disable deployment option changes when artifacts are already deployed</h3>
+                <hr />
+                </td>
+        </tr>
+        <tr>
+                <td valign="top" align="left">
+                        <p><b>Editor page becomes disabled</b></p>
+                </td>
+        <td align="top">
+                        <p>
+				Users never should be changing the deployment locations of already-deployed 
+				artifacts. This might cause the tools to deploy multiple copies in different locations
+				due to architectural issues. However, enough users were doing this that it was decided to 
+				disable changes to a server's deployment settings unless a server was fully synchronized
+				with no modules deployed. This will help users to undeploy relevant modules first before
+				making these changes. 
+                        </p>
+                                <small>
+                                        <a href="https://issues.jboss.org/browse/JBIDE-11982">Related Jira</a>
+                                </small><br/>
+                        </p>
+                </td>
+        </tr>
+
+        <tr>
+                <td colspan="2">
+                <hr />
+                <h3>Deployment of zipped artifacts sent file twice</h3>
+                <hr />
+                </td>
+        </tr>
+        <tr>
+                <td valign="top" align="left">
+                        <p><b>Performance Improvement</b></p>
+                </td>
+        <td align="top">
+                        <p>
+                        It was discovered that zipped deployment was sending the same file over the wire twice. This has been fixed. 
+			</p>
+                                <small>
+                                        <a href="https://issues.jboss.org/browse/JBIDE-12362">Related Jira</a>
+                                </small><br/>
+                        </p>
+                </td>
+        </tr>
+
+
+
+	<tr>
+			<td colspan="2">
+                <hr />
+                <h3>New Fileset Wizard Preview Broken</h3>
+                <hr />
+                </td>
+        </tr>   
+        <tr>
+                <td valign="top" align="left">
+                        <p><b>UI Fix</b></p>
+                </td>
+        <td align="top">
+                        <p>
+				Due to a regression during heavy refactors, the preview dialog of a new fileset wizard, 
+				which is in charge of showing the first dozen or so files that match the given pattern, 
+				stopped showing results. This has been fixed, and matching elements will now be shown as always. 
+                        </p>
+                                <small>
+                                        <a href="https://issues.jboss.org/browse/JBIDE-12659">Related Jira</a>
+                                </small><br/>
+                        </p>
+                </td>
+        </tr>
+
+
+
+        <tr>
+                        <td colspan="2">
+                <hr />
+                <h3>Project Archives Fixes</h3>
+                <hr />
+                </td>
+        </tr>
+        <tr>
+                <td valign="top" align="left">
+                        <p><b>Easy enablement / disablement </b></p>
+                </td>
+        <td align="top">
+                        <p>
+			Enablement and disablement of project archives has been simplified. Now, simply
+			right-click on your project, and select Configure -&gt; Add Project Archives Support 
+			or Remove. This gives a more easy front end to users looking to enable or disable this
+			feature of their project. 
+                        </p>
+                                <small>
+                                        <a href="https://issues.jboss.org/browse/JBIDE-11927">Related Jira</a>
+                                </small><br/>
+                        </p>
+                </td>
+        </tr>
+        <tr>
+                <td valign="top" align="left">
+                        <p><b>Project Archives View doesn't clear after project deletion </b></p>
+                </td>
+        <td align="top">
+                        <p>
+				Projects with the Project Archvies features were not being fully removed from the 
+				model or the UI after the project was deleted. This has been fixed by adding a deletion
+				participant and ensuring that the view has the proper checks in it during the workspace change
+				to clear the view properly. 
+                        </p>
+                                <small>
+                                        <a href="https://issues.jboss.org/browse/JBIDE-12494">Related Jira</a>
+                                </small><br/>
+                        </p>
+                </td>
+        </tr>
+
+<hr />
+
+</table>
+
+</body>
+
+</html>
+
+
