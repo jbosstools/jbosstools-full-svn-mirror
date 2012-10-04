@@ -37,6 +37,8 @@ if [[ ${PROJECT_NAME} ]]; then
   if [[ ${OPERATION} ==  "MOVE" ]]; then
     echo -e "rename builds/staging/${SOURCE_PATH} updates/${BUILD_TYPE}/${TARGET_PLATFORM}/${PARENT_FOLDER}/${PROJECT_NAME}/${TARGET_FOLDER}" | sftp ${DESTINATION}
   else
+    # purge existing workspace folder to ensure we're not combining releases
+    if [[ ${WORKSPACE} ]] && [[ -d ${WORKSPACE}/${JOB_NAME} ]]; then rm -fr ${WORKSPACE}/${JOB_NAME}/; fi
     rsync -arzq --protocol=28 ${DESTINATION}/builds/staging/${SOURCE_PATH}/* ${WORKSPACE}/${JOB_NAME}/
     rsync -arzq --protocol=28 --delete ${WORKSPACE}/${JOB_NAME}/* ${DESTINATION}/updates/${BUILD_TYPE}/${TARGET_PLATFORM}/${PARENT_FOLDER}/${PROJECT_NAME}/${TARGET_FOLDER}/
   fi
