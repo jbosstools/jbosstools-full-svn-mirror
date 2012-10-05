@@ -4,7 +4,6 @@
 # --------------------------------------------------------------------------------
 # clean JBT builds from sftp://tools@filemgmt.jboss.org/downloads_htdocs/tools/builds/nightly
 
-now=$(date +%s)
 log=/tmp/${0##*/}.log.`date +%Y%m%d-%H%M`.txt
 
 echo "Logfile: $log" | tee -a $log
@@ -98,8 +97,9 @@ clean ()
 			rm -f $tmp
 			for dd in $all; do
 				keep=0;
-				# sec=$(date -d "$(echo $dd | perl -pe "s/(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})/\1-\2-\3\ \4:\5/")" +%s) # convert buildID (folder) to timestamp, then to # seconds since epoch ## OLD FOLDER FORMAT
-				sec=$(date -d "$(echo $dd | perl -pe "s/(\d{4})-(\d{2})-(\d{2})_(\d{2})-(\d{2})-(\d{2})-(H|B)(\d+)/\1-\2-\3\ \4:\5:\6/")" +%s) # convert buildID (folder) to timestamp, then to # seconds since epoch ## NEW FOLDER FORMAT
+				# convert buildID (folder) to timestamp, then to # seconds since 2009-01-01 00:00:00 (1230786000)
+				sec=$(date -d "$(echo $dd | perl -pe "s/(\d{4})-(\d{2})-(\d{2})_(\d{2})-(\d{2})-(\d{2})-(H|B)(\d+)/\1-\2-\3\ \4:\5:\6/")" +%s); (( sec = sec - 1230786000 ))
+				now=$(date +%s); (( now = now - 1230786000 ))
 				(( day = now - sec )) 
 				(( day = day / 3600 / 24 ))
 				for n in $newest; do
