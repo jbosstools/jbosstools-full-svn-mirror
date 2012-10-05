@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="mirror">
+	<!-- run locally in Eclipse (to resolve p2 tasks) using these commandline options:
+	
+		-os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl} 
+		-consoleLog -nosplash -data /tmp
+		-application org.eclipse.ant.core.antRunner
+		-f "/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/android/build.xml"
+		
+		or, run headless on qa01 server, where Eclipse is installed into ~/eclipse:
+		
+		export JAVA_HOME=/opt/jdk1.6.0; \
+		${JAVA_HOME}/bin/java -cp ~/eclipse/plugins/org.eclipse.equinox.launcher_*.jar \
+			org.eclipse.equinox.launcher.Main -vm ${JAVA_HOME} -consoleLog -nosplash -data /tmp \
+			-application org.eclipse.ant.core.antRunner \
+			-f ~/RHDS/updates/requirements/android/build.xml -Ddestination=/tmp/android-repo
+	-->
+	<target name="mirror">
+		<!-- released under ASL/BSD/EPL, so we can mirror and redistribute -->
+		<property name="URL" value="https://dl-ssl.google.com/android/eclipse/" />
+		<property name="destination" value="/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/android/20.0.3.v201208082019-427395/" />
+		<property name="compress" value="true" />
+
+		<p2.mirror>
+			<repository location="file:${destination}/20.0.3.v201208082019-427395/" name="Android Development Tools for Eclipse" />
+			<source>
+				<repository location="${URL}" />
+			</source>
+
+			<slicingOptions includeFeatures="true" followStrict="true" />
+
+			<!-- DO NOT INCLUDE the Android Native Development Tools (NDK) feature (com.android.ide.eclipse.ndk.feature.group), which requires CDT -->
+			<iu id="com.android.ide.eclipse.ddms.feature.group" />
+			<iu id="com.android.ide.eclipse.adt.feature.group" />
+			<iu id="com.android.ide.eclipse.hierarchyviewer.feature.group" />
+			<iu id="com.android.ide.eclipse.traceview.feature.group" />
+			<iu id="com.android.ide.eclipse.gldebugger.feature.group" />
+
+		</p2.mirror>
+
+		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/20.0.3.v201208082019-427395/" artifactRepository="file:${destination}/20.0.3.v201208082019-427395/" publishartifacts="true" source="${destination}/20.0.3.v201208082019-427395/" compress="${compress}" />
+	</target>
+</project>
