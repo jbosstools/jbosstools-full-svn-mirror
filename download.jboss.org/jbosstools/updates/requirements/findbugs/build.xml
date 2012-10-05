@@ -16,12 +16,13 @@
 			-f ~/RHDS/updates/requirements/findbugs/build.xml -Ddestination=/tmp/findbugs-repo
 	-->
 	<target name="mirror">
-		<property name="URL" value="http://eclipse-cs.sf.net/update/" />
-		<property name="destination" value="/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/findbugs/2.0.1.20120712/" />
+		<!-- <property name="URL" value="http://findbugs.cs.umd.edu/eclipse/" /> -->
+		<property name="URL" value="http://findbugs.cs.umd.edu/eclipse-daily/" />
+		<property name="destination" value="/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/findbugs/2.0.2.20121005/" />
 		<property name="compress" value="true" />
 
 		<p2.mirror>
-			<repository location="file:${destination}/2.0.1.20120712/" name="findbugs for Eclipse" />
+			<repository location="file:${destination}/2.0.2.20121005/" name="findbugs for Eclipse" />
 			<source>
 				<repository location="${URL}" />
 			</source>
@@ -29,6 +30,6 @@
 			<slicingOptions includeFeatures="true" followStrict="true" />
 		</p2.mirror>
 
-		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/2.0.1.20120712/" artifactRepository="file:${destination}/2.0.1.20120712/" publishartifacts="true" source="${destination}/2.0.1.20120712/" compress="${compress}" />
+		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/2.0.2.20121005/" artifactRepository="file:${destination}/2.0.2.20121005/" publishartifacts="true" source="${destination}/2.0.2.20121005/" compress="${compress}" />
 	</target>
 </project>
