@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/edu.umd.cs.findbugs.plugin.eclipse_2.0.2.20121005.jar" id="edu.umd.cs.findbugs.plugin.eclipse" version="2.0.2.20121005">
+      <category name="Findbugs"/>
+   </feature>
+   <category-def name="Findbugs" label="Findbugs"/>
+</site>
