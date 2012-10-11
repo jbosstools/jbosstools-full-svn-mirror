@@ -117,16 +117,5 @@
 				<enabled>true</enabled>
 			</releases>
 		</repository>
-		<repository>
-			<id>jboss-requirements-composite-mirror</id>
-			<url>${jboss-requirements-composite-mirror}</url>
-			<layout>p2</layout>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-		</repository>
 	</repositories>
 </project>
