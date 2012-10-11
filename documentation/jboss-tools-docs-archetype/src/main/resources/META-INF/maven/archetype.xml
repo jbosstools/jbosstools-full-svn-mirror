@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><archetype>
-  <id>ref-guide</id>
-  <resources>
-    <resource>en\images\</resource>
-     <resource>en\master.xml</resource>
-    <resource>en\modules\chapter1.xml</resource>
-  </resources>
-</archetype>
