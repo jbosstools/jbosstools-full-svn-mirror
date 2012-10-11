@@ -100,8 +100,8 @@
 			</releases>
 		</repository>
 		<repository>
-			<id>jboss-requirements-composite-mirror</id>
-			<url>${jboss-requirements-composite-mirror}</url>
+			<id>jbosstools-target-site</id>
+			<url>${jbosstools-target-site}</url>
 			<layout>p2</layout>
 			<snapshots>
 				<enabled>true</enabled>

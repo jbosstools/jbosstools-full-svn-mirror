@@ -28,6 +28,6 @@
 
 		mvn clean install ... \
 			-Djbosstools-nightly-staging-composite=file:///home/nboldt/tru/build/aggregate/local-site/ \
-			-Djboss-requirements-composite-mirror=file:///home/nboldt/tru/build/target-platform/REPO/
+			-Djbosstools-target-site=file:///home/nboldt/tru/build/target-platform/REPO/
 	-->
 </project>
