@@ -508,18 +508,6 @@ Using ant:   ant custom.build -f ../build.xml -Doutput.dir=`pwd` -DinputRepo=htt
 		</if>
 	</target>
 
-	<target name="get.eclipse">
-		<ant antfile="../target-platforms/scripts/build.xml" target="get.eclipse">
-			<property name="getArch" value="${output.dir}/../../target-platforms/scripts/getArch.sh"/>
-			<property name="eclipse.version" value="4.2.1" />
-			<property name="eclipse.type" value="platform" />
-			<property name="eclipse.URL" value="http://www.eclipse.org/downloads/download.php?r=1&amp;file=/eclipse/downloads/drops4/R-4.2.1-201209141800"/>
-			<property name="downloadDir" value="${WORKINGDIR}"/>
-			<property name="unpackDir" value="${tmpdir}"/>
-		</ant>
-		<var name="eclipseDir" value="${tmpdir}/eclipse"/>
-	</target>
-
 	<target name="install.releng.tools" depends="get.eclipse">
 		<!-- install releng tools; want more verbose output? use -consolelog -debug -console -->
 		<exec executable="${eclipseDir}/eclipse" failonerror="true" dir="${eclipseDir}" timeout="300000" taskname="p2">
@@ -940,6 +928,83 @@ Using ant:   ant custom.build -f ../build.xml -Doutput.dir=`pwd` -DinputRepo=htt
 		<property name="isTest" value="true" />
 		<antcall target="create.summary.file">
 		</antcall>
+	</target>
+
+	<target name="get.arch">
+		<condition property="ext" value="tar.gz" else="zip">
+			<os family="unix" />
+		</condition>
+		<condition property="os1" value="linux-gtk" else="win32">
+			<os family="unix" />
+		</condition>
+		<condition property="os" value="macosx-cocoa" else="${os1}">
+			<os family="mac" />
+		</condition>
+		<if>
+			<os family="unix" />
+			<then>
+			   <available file="getArch.sh"  property="getArchInSamePath"/>
+				<if>
+					<isset property="getArchInSamePath"/>
+					<then>
+						<property name="getArch" value="getArch.sh"/>
+					</then>
+					<else>
+						<property name="getArch" value="${output.dir}/../getArch.sh"/>
+					</else>
+				</if>
+
+				<!-- Ant thinks that ${os.arch} == i386 for x86_64, so use `uname` instead -->
+				<exec executable="bash" outputproperty="arch">
+					<arg line="${getArch}" />
+				</exec>
+			</then>
+			<else>
+				<condition property="arch" value="x86_64" else="">
+					<os arch="amd64" />
+				</condition>
+			</else>
+		</if>
+	</target>
+
+	<!-- TODO: replace this cruft with something less crufty - mojo? -->
+	<target name="get.eclipse" depends="get.arch">
+		<!-- NOTE: must use same platform (50M) or SDK (103M - 168M) version as feature version on target platform, or will get install/update conflicts -->
+		<property name="eclipse.version" value="4.2.1" />
+		<property name="eclipse.type" value="platform" />
+		<property name="eclipse.URL" value="http://www.eclipse.org/downloads/download.php?r=1&amp;file=/eclipse/downloads/drops4/R-4.2.1-201209141800"/>
+		<property name="downloadDir" value="${WORKINGDIR}"/>
+		<property name="unpackDir" value="${tmpdir}"/>
+		<property name="eclipseDir" value="${tmpdir}/eclipse"/>
+		<!-- <property name="eclipse.version" value="M20120829-1000" />
+		<property name="eclipse.type" value="platform" />
+		<property name="eclipse.URL" value="http://www.eclipse.org/downloads/download.php?r=1&amp;file=/eclipse/downloads/drops4/M20120829-1000"/> -->
+		<if>
+			<equals arg1="${arch}" arg2="x86" />
+			<then>
+				<property name="eclipse.file" value="eclipse-${eclipse.type}-${eclipse.version}-${os}.${ext}" />
+			</then>
+			<else>
+				<property name="eclipse.file" value="eclipse-${eclipse.type}-${eclipse.version}-${os}-${arch}.${ext}" />
+			</else>
+		</if>
+
+		<if>
+			<not>
+				<available file="${downloadDir}/${eclipse.file}" type="file" />
+			</not>
+			<then>
+				<get src="${eclipse.URL}/${eclipse.file}" dest="${downloadDir}/${eclipse.file}" ignoreerrors="false"/>
+			</then>
+		</if>
+
+		<!-- purge previous eclipse install to avoid conflicts w/ Eclipse feature versions -->
+		<delete dir="${unpackDir}" includeemptydirs="true" quiet="true" />
+
+		<untar compression="gzip" dest="${unpackDir}" src="${downloadDir}/${eclipse.file}" overwrite="true" />
+
+		<!-- make eclipse executable -->
+		<chmod perm="+x" file="${unpackDir}/eclipse/eclipse" />
 	</target>
 
 	<target name="cleanup">
