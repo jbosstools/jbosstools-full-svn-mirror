@@ -112,7 +112,7 @@ This project is setup to allow you to create a compliant Java EE 6 application u
 			<archetypeRepository>http://repository.jboss.org/nexus/content/repositories/releases/</archetypeRepository>
 			-->
             <groupId>org.jboss.tools.example</groupId>
-			<artifactId>multi</artifactId>
+			<artifactId>jboss-javaee6-multi</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 			<javaPackage>org.jboss.tools.example</javaPackage>
 		</mavenArchetype>
@@ -168,7 +168,7 @@ This project is setup to allow you to create a compliant Java EE 6 application u
             <archetypeRepository>http://repository.jboss.org/nexus/content/repositories/releases/</archetypeRepository>
             -->
             <groupId>org.jboss.tools.example</groupId>
-			<artifactId>poh5</artifactId>
+			<artifactId>jboss-html5-webapp</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 			<javaPackage>org.jboss.tools.example.html5</javaPackage>
 		</mavenArchetype>
@@ -225,7 +225,7 @@ This project is setup to allow you to create a compliant Java EE 6 application u
 			<archetypeRepository>http://repository.jboss.org/nexus/content/repositories/snapshots/</archetypeRepository>
 			-->
             <groupId>org.jboss.tools.example</groupId>
-			<artifactId>richfaces-webapp</artifactId>
+			<artifactId>jboss-richfaces-webapp</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 			<javaPackage>org.jboss.tools.example.richfaces</javaPackage>
             <properties>
@@ -286,7 +286,7 @@ This project is setup to allow you to create a compliant Java EE 6 application u
 			<archetypeRepository>http://repository.jboss.org/nexus/content/repositories/releases/</archetypeRepository>
 			-->
             <groupId>org.jboss.tools.example</groupId>
-			<artifactId>springmvc</artifactId>
+			<artifactId>jboss-springmvc-webapp</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 			<javaPackage>org.jboss.tools.example.springmvc</javaPackage>
             <!--
@@ -356,7 +356,7 @@ Make sure you read the deployment instructions in README.md.</description>
 			<archetypeRepository>https://repository.jboss.org/nexus/content/groups/public/</archetypeRepository>
             -->
             <groupId>org.jboss.tools.example</groupId>
-			<artifactId>gwt-kitchensink</artifactId>
+			<artifactId>jboss-gwt-webapp</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 			<javaPackage>org.jboss.tools.gwt.kitchensink</javaPackage>
 		</mavenArchetype>
