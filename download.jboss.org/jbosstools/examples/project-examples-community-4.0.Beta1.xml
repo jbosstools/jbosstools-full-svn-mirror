@@ -33,7 +33,6 @@ It includes the registration,registration-ejb,registration-ear,registration-test
 			</fix>
 		</fixes>
 	</project>
-	
 	<project>
 		<category>Seam</category>
 		<name>registration2</name>
@@ -66,7 +65,6 @@ It includes a tutorial.
 			</fix>
 		</fixes>
 	</project>
-	
 	<project>
 		<category>Seam</category>
 		<name>messages</name>
@@ -99,7 +97,6 @@ It includes a tutorial.
 			</fix>
 		</fixes>
 	</project>
-	
 	<project>
 		<category>Seam</category>
 		<name>todo</name>
@@ -133,7 +130,6 @@ It includes a tutorial.
 			</fix>
 		</fixes>
 	</project>
-	
 	<project>
 		<category>Seam</category>
 		<name>numberguess</name>
@@ -167,55 +163,6 @@ It includes a tutorial.
 			</fix>
 		</fixes>
 	</project>
-	
-	<project>
-		<category>Seam</category>
-		<name>booking3-mavenized</name>
-		<included-projects>
-		booking,booking-ear,booking-ejb,booking-parent,booking-test
-		</included-projects>
-		<shortDescription>Seam Booking Example - EAR mavenized - Seam 2.1.1.GA</shortDescription>
-		<description>This example demonstrates the use of Seam in a Java EE 5 environment. 
-Transaction and persistence context management is handled by the EJB container.
-It includes the booking, booking-ear, booking-ejb, booking-test and booking-parent projects.
-Requires JBoss Enterprise Application Platform 4.3/JBoss Application Server 4.2.x, Seam 2.1, m2eclipse and testng plugins.
-</description>
-		<size>196608</size>
-		<url>
-			http://anonsvn.jboss.org/repos/jbosstools/workspace/snjeza/seam-examples/booking-mavenized-2.1.1.zip
-		</url>
-
-		<fixes>
-			<fix type="wtpruntime">
-				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.43, org.jboss.ide.eclipse.as.runtime.42</property>
-				<property name="eclipse-projects">booking,booking-ejb,booking-ear</property>
-				<property name="description">This project example requires JBoss Enterprise Application Platform 4.3 or JBoss Application Server 4.2.x</property>
-			</fix>
-			
-			<fix type="seam">
-				<property name="allowed-versions">2.1.0, 2.1.1, 2.1.2</property>
-				<property name="eclipse-projects">booking</property>
-				<property name="description">This project example requires Seam 2.1</property>
-			</fix>
-			<fix type="plugin">
-				<property name="id">org.maven.ide.eclipse</property>
-				<property name="versions">0.9.9, 0.12.9</property>
-				<property name="description">This project example requires m2eclipse &lt;= 0.12.x. You can install it using the following update sites: http://m2eclipse.sonatype.org/sites/m2e and http://m2eclipse.sonatype.org/sites/m2e-extras</property>
-			</fix>
-			<fix type="plugin">
-				<property name="id">org.maven.ide.eclipse.wtp</property>
-				<property name="versions">0.9.9, 0.12.9</property>
-				<property name="description">This project example requires m2eclipse-wtp &lt;= 0.12.x. You can install it using the following update site: http://m2eclipse.sonatype.org/sites/m2e-extras</property>
-			</fix>
-			<fix type="plugin">
-				<property name="id">org.testng.eclipse</property>
-				<property name="versions">5.8.0, 5.9.0</property>
-				<property name="description">The TestNG plugin is required if you want to run Seam tests. You can install it using the following update site: http://beust.com/eclipse</property>
-			</fix>
-			
-		</fixes>
-	</project>
-	
 	<project>
 		<category>Seam</category>
 		<name>booking3</name>
@@ -252,56 +199,6 @@ It includes the booking, booking-ear,booking-test and booking-ejb projects.
 			</fix>
 		</fixes>
 	</project>
-	
-	<project>
-		<category>Seam</category>
-
-		<name>booking2</name>
-		<included-projects>
-		booking,booking-ear,booking-ejb,booking-parent,booking-test
-		</included-projects>
-		<shortDescription>Seam Booking Example - EAR mavenized</shortDescription>
-		<description>This example demonstrates the use of Seam in a Java EE 5 environment. 
-Transaction and persistence context management is handled by the EJB container.
-It includes the booking, booking-ear, booking-ejb,booking-test and booking-parent projects.
-Requires JBoss Enterprise Application Platform 4.3/JBoss Application Server 4.2.x, Seam 2.0, m2eclipse and testng plugins.
-</description>
-		<size>203639</size>
-
-		<url>
-			http://anonsvn.jboss.org/repos/jbosstools/workspace/snjeza/seam-examples/booking-mavenized.zip
-		</url>
-		<fixes>
-			<fix type="wtpruntime">
-				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.43, org.jboss.ide.eclipse.as.runtime.42</property>
-				<property name="eclipse-projects">booking,booking-ejb,booking-ear</property>
-				<property name="description">This project example requires JBoss Enterprise Application Platform 4.3 or JBoss Application Server 4.2.x</property>
-			</fix>
-			
-			<fix type="seam">
-				<property name="allowed-versions">2.0.0, 2.0.1, 2.0.2</property>
-				<property name="eclipse-projects">booking</property>
-				<property name="description">This project example requires Seam 2.0</property>
-			</fix>
-			<fix type="plugin">
-				<property name="id">org.maven.ide.eclipse</property>
-				<property name="versions">0.9.9, 0.12.9</property>
-				<property name="description">This project example requires m2eclipse &lt;= 0.12.x. You can install it using the following update sites: http://m2eclipse.sonatype.org/sites/m2e and http://m2eclipse.sonatype.org/sites/m2e-extras</property>
-			</fix>
-			<fix type="plugin">
-				<property name="id">org.maven.ide.eclipse.wtp</property>
-				<property name="versions">0.9.9, 0.12.9</property>
-				<property name="description">This project example requires m2eclipse-wtp &lt;= 0.12.x. You can install it using the following update site: http://m2eclipse.sonatype.org/sites/m2e-extras</property>
-			</fix>
-			<fix type="plugin">
-				<property name="id">org.testng.eclipse</property>
-				<property name="versions">5.8.0, 5.9.0</property>
-				<property name="description">The TestNG plugin is required if you want to run Seam tests. You can install it using the following update site: http://beust.com/eclipse</property>
-			</fix>
-			
-		</fixes>
-	</project>
-	
 	<project>
 		<category>Seam</category>
 		<name>booking22</name>
@@ -340,47 +237,7 @@ It includes the booking22, booking22-ear,booking22-test and booking22-ejb projec
 				<property name="connectorIds">org.testng.eclipse</property>
 			</fix>
 		</fixes>
-	</project>
-	
-	<project>
-		<category>Seam</category>
-		<name>photoalbum-mavenized</name>
-		<included-projects>
-		photoalbum-mavenized,photoalbum-mavenized-ear,photoalbum-mavenized-ejb,photoalbum-mavenized-parent 
-		</included-projects>
-		<shortDescription>PhotoAlbum - EAR mavenized (RichFaces 3.3.1.GA, Seam 2.2.0.GA)</shortDescription>
-		<description>This example demonstrates the use of RichFaces components. It includes the photoalbum-mavenized,photoalbum-mavenized-ear,photoalbum-mavenized-ejb and photoalbum-mavenized-parent projects.
-The example requires Seam 2.2,JBoss Enterprise Application Platform 4.3/5.0 or JBoss Application Server 4.2.x/5.x and m2eclipse.
-		</description>
-		<size>16441344</size>
-		<url>
-			http://anonsvn.jboss.org/repos/jbosstools/workspace/snjeza/seam-examples/photoalbum-mavenized.zip
-		</url>
-		<fixes>
-			<fix type="wtpruntime">
-				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.50, org.jboss.ide.eclipse.as.runtime.eap.43, org.jboss.ide.eclipse.as.runtime.51, org.jboss.ide.eclipse.as.runtime.50, org.jboss.ide.eclipse.as.runtime.42</property>
-				<property name="eclipse-projects">photoalbum-mavenized,photoalbum-mavenized-ear,photoalbum-mavenized-ejb</property>
-				<property name="description">This project example requires JBoss Enterprise Application Platform 4.3/5.0 or JBoss Application Server 4.2.x/5.x</property>
-			</fix>
-			
-			<fix type="seam">
-				<property name="allowed-versions">2.2.0</property>
-				<property name="eclipse-projects">photoalbum-mavenized</property>
-				<property name="description">This project example requires Seam 2.2</property>
-			</fix>
-			<fix type="plugin">
-				<property name="id">org.maven.ide.eclipse</property>
-				<property name="versions">0.9.9, 0.12.9</property>
-				<property name="description">This project example requires m2eclipse &lt;= 0.12.x. You can install it using the following update sites: http://m2eclipse.sonatype.org/sites/m2e and http://m2eclipse.sonatype.org/sites/m2e-extras</property>
-			</fix>
-			<fix type="plugin">
-				<property name="id">org.maven.ide.eclipse.wtp</property>
-				<property name="versions">0.9.9, 0.12.9</property>
-				<property name="description">This project example requires m2eclipse-wtp &lt;= 0.12.x. You can install it using the following update site: http://m2eclipse.sonatype.org/sites/m2e-extras</property>
-			</fix>
-		</fixes>
-	</project>
-	
+	</project>	
 	<project>
 		<category>Seam</category>
 		<name>photoalbum</name>
@@ -409,7 +266,6 @@ The example requires Seam 2.2 and JBoss Enterprise Application Platform 4.3/5.0 
 			</fix>
 		</fixes>
 	</project>
-	
 	<project>
 		<category>Seam</category>
 
@@ -444,36 +300,6 @@ The example requires Seam 2.2 and JBoss Enterprise Application Platform 4.3/5.0 
 			</fix>
 		</fixes>
 	</project>
-	
-	<project>
-		<category>RESTEasy</category>
-		<name>simple</name>
-		<included-projects>
-		simple
-		</included-projects>
-
-		<shortDescription>RESTEasy Simple Example</shortDescription>
-		<description>This project is a simple example showing usage of @Path, @GET, PUT, POST, and @PathParam. It uses pure streaming output and includes the 'simple' project. 
-Requires m2eclipse and JBoss Enterprise Application Platform 4.3/5.0 or JBoss Application Server 4.2.x/5.x.
-		</description>
-		<size>16939</size>
-		<url>
-			http://anonsvn.jboss.org/repos/jbosstools/workspace/snjeza/resteasy-examples/resteasySimple.zip
-		</url>
-		<fixes>
-			<fix type="wtpruntime">
-				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.50, org.jboss.ide.eclipse.as.runtime.eap.43, org.jboss.ide.eclipse.as.runtime.51, org.jboss.ide.eclipse.as.runtime.50, org.jboss.ide.eclipse.as.runtime.42</property>
-				<property name="eclipse-projects">simple</property>
-				<property name="description">This project example requires JBoss Enterprise Application Platform 4.3/5.0 or JBoss Application Server 4.2.x/5.x</property>
-			</fix>
-			<fix type="plugin">
-				<property name="id">org.maven.ide.eclipse.wtp</property>
-				<property name="versions">0.10.0</property>
-				<property name="description">This project example requires m2eclipse. You can install it using the following update sites: http://m2eclipse.sonatype.org/sites/m2e and http://m2eclipse.sonatype.org/sites/m2e-extras</property>
-			</fix>
-		</fixes>
-	</project>
-	
 	<project>
 		<category>Portlet</category>
 		<name>testjsfportlet</name>
@@ -493,7 +319,6 @@ Requires m2eclipse and JBoss Enterprise Application Platform 4.3/5.0 or JBoss Ap
 			
 		</fixes>
 	</project>
-
 	<project>
 		<category>Portlet</category>
 
@@ -517,7 +342,6 @@ Requires m2eclipse and JBoss Enterprise Application Platform 4.3/5.0 or JBoss Ap
 			</fix>
 		</fixes>
 	</project>
-	
 	<project>
 		<category>Portlet for JBoss Enterprise Portal Platform 5.x/GateIn 3.1</category>
 		<name>JSFPortlet</name>
@@ -539,7 +363,6 @@ Requires m2eclipse and JBoss Enterprise Application Platform 4.3/5.0 or JBoss Ap
 			
 		</fixes>
 	</project>
-	
 	<project>
 		<category>Portlet for JBoss Enterprise Portal Platform 5.x/GateIn 3.1</category>
 		<name>RichFacesPortlet</name>
@@ -561,7 +384,6 @@ Requires m2eclipse and JBoss Enterprise Application Platform 4.3/5.0 or JBoss Ap
 			
 		</fixes>
 	</project>
-	
 	<project>
 		<category>Portlet for JBoss Enterprise Portal Platform 5.x/GateIn 3.1</category>
 		<name>SeamPortlet</name>
@@ -586,490 +408,5 @@ Requires m2eclipse and JBoss Enterprise Application Platform 4.3/5.0 or JBoss Ap
 				<property name="description">This project example requires Seam version 2.2.0</property>
 			</fix>
 		</fixes>
-	</project>
-	
-	<project>
-		<category>ESB for JBoss Enterprise SOA Platform 5.0</category>
-		<name>helloworld</name>
-		<included-projects>	helloworld,helloworld_testclient </included-projects>
-		<shortDescription>JBoss ESB HelloWorld Example - ESB</shortDescription>
-		<description>This example is to prove that the ESB is is properly configured and happy. 
-As well as to demonstrate the needed  minimal files to make a basic ESB component execute. 
-Example requires a JBoss Enterprise SOA Platform 5.x runtime.</description>
-		<size>1101025</size>
-		<url>
-			http://anonsvn.jboss.org/repos/jbosstools/workspace/Denny/esb-example-soa-p5.0/helloworld_all.zip
-		</url>
-		<fixes>
-			<fix type="wtpruntime">
-				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.50, org.jboss.ide.eclipse.as.runtime.51</property>
-				<property name="eclipse-projects">helloworld,helloworld_testclient</property>
-				<property name="required-components">esb</property>
-				<property name="description">This project example requires the JBoss Enterprise SOA Platform 5.0 and the runtime name should be "jboss-soa-p.5.0 Runtime"</property>
-			</fix>
-		</fixes>
 	</project>	
-	
-	<project>
-		<category>ESB for JBoss Enterprise SOA Platform 5.0</category>
-		<name>helloworld_action</name>
-		<included-projects>helloworld_action,helloworld_action_client </included-projects>
-		<shortDescription>JBoss ESB HelloWorld Action Example - ESB</shortDescription>
-		<description>This sample is to demonstrate the use of multiple action invocations from a single configuration. You can use
-  a single Action class and make multiple method calls or use multiple Action
-  classes. Example requires a JBoss Enterprise SOA Platform 5.x runtime.</description>
-		<size>26261</size>
-		<url>
-			http://anonsvn.jboss.org/repos/jbosstools/workspace/Denny/esb-example-soa-p5.0/helloworld_action_all.zip
-		</url>
-		<fixes>
-			<fix type="wtpruntime">
-				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.50, org.jboss.ide.eclipse.as.runtime.51</property>
-				<property name="eclipse-projects">helloworld_action,helloworld_action_client</property>
-				<property name="required-components">esb</property>
-				<property name="description">This project example requires the JBoss Enterprise SOA Platform 5.0 and the runtime name should be "jboss-soa-p.5.0 Runtime"</property>
-			</fix>
-		</fixes>
-	</project>
-	
-<!--  This example works only on SOA-P 5.1 due to some jar incompatibilities with other SOA-P versions -->
-<!-- <project>
-		<category>ESB for JBoss Enterprise SOA Platform 5.0</category>
-		<name>helloworld_mail</name>		
-		<included-projects>helloworld_mail,helloworld_mail_testclient</included-projects>
-		<shortDescription>JBoss ESB HelloWorld Email Example</shortDescription>
-		<description>This is a very basic example that demonstrates how to configure a mail
-gateway using a JCA mail adapter and a Camel mail endpoint.  Both gateways
-route the messages through a JMS queue and finally to your action class for
-processing.
-NOTE: Before you import this example, please make sure that there is a runtime named "jboss-soa-p.5.0 Runtime" defined in the workspace.
-</description>
-		<size>1132232</size>
-		<url>
-			http://anonsvn.jboss.org/repos/jbosstools/workspace/rcernich/examples/esb/helloworld_mail_eclipse.zip
-		</url>
-		<fixes>
-			<fix type="wtpruntime">
-				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.50, org.jboss.ide.eclipse.as.runtime.51</property>
-				<property name="eclipse-projects">helloworld_mail,helloworld_mail_testclient</property>
-				<property name="required-components">esb</property>
-				<property name="description">This project example requires a JBoss Enterprise SOA Platform 5.0 runtime named "jboss-soa-p.5.0 Runtime"</property>
-			</fix>
-		</fixes>
-	</project>	
--->
-	
-	<project>
-		<category>ESB for JBoss Enterprise SOA Platform 5.0</category>
-		<name>helloworld_file_action</name>		
-		<included-projects>helloworld_file_action,helloworld_file_action_client</included-projects>
-		<shortDescription>JBoss ESB HelloWorld File Action Example - ESB</shortDescription>
-		<description>This is a basic example of using the File gateway feature of the JBoss ESB.
- Files that are found in a particular directory with a particular extension
-  are sent to a JMS queue with actions for processing. Before deploy the project, 
-  please change some properties according to the readme.txt file. Example requires a 
-  SOA-P 5.x runtime.</description>
-		<size>16505</size>
-		<url>
-			http://anonsvn.jboss.org/repos/jbosstools/workspace/Denny/esb-example-soa-p5.0/helloworld_file_action_all.zip
-		</url>
-		<fixes>
-			<fix type="wtpruntime">
-				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.50, org.jboss.ide.eclipse.as.runtime.51</property>
-				<property name="eclipse-projects">helloworld_file_action, helloworld_file_action_client</property>
-				<property name="required-components">esb</property>
-				<property name="description">This project example requires the JBoss Enterprise SOA Platform 5.0 and the runtime name should be "jboss-soa-p.5.0 Runtime"</property>
-			</fix>
-		</fixes>
-	</project>	
-	
-	<project>
-		<category>ESB for JBoss Enterprise SOA Platform 5.0</category>
-		<name>webservice_consumer1</name>		
-		<included-projects>webservice_consumer1,webservice_consumer1_client</included-projects>
-		<shortDescription>JBoss ESB Web Service consumer1 Example</shortDescription>
-		<description>This example demonstrates how to consume a 181 Web Service in an ESB action.
-    This ESB will make a webservice request that requires a single "toWhom" string parameter.
-    The webservice will return a greeting response. The ESB simply dislays the response on the 
-    console. Example requires a JBoss Enterprise SOA Platform 5.x runtime.</description>
-		<size>1120499</size>
-		<url>
-			http://anonsvn.jboss.org/repos/jbosstools/workspace/Denny/esb-example-soa-p5.0/webservice_consumer1_all.zip
-		</url>
-		<fixes>
-			<fix type="wtpruntime">
-				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.50, org.jboss.ide.eclipse.as.runtime.51</property>
-				<property name="eclipse-projects">webservice_consumer1,webservice_consumer1_client</property>
-				<property name="required-components">esb</property>
-				<property name="description">This project example requires the JBoss Enterprise SOA Platform 5.0 and the runtime name should be "jboss-soa-p.5.0 Runtime"</property>
-			</fix>
-		</fixes>
-	</project>
-
-
-	<project>
-		<category>ESB for JBoss Enterprise SOA Platform 5.0</category>
-		<name>webservice_producer</name>		
-		<included-projects>webservice_producer,webservice_producer_client</included-projects>
-		<shortDescription>JBoss ESB Web Service producer Example</shortDescription>
-		<description>This sample demonstrates how to deploy a JSR181 Webservice endpoint on
-  JBossESB using the SOAPProcessor action. Example requires a JBoss Enterprise SOA Platform 5.x runtime.</description>
-		<size>55269</size>
-		<url>
-			http://anonsvn.jboss.org/repos/jbosstools/workspace/Denny/esb-example-soa-p5.0/webservice_producer_all.zip
-		</url>
-		<fixes>
-			<fix type="wtpruntime">
-				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.50, org.jboss.ide.eclipse.as.runtime.51</property>
-				<property name="eclipse-projects">webservice_producer, webservice_producer_client</property>
-				<property name="required-components">esb</property>
-				<property name="description">This project example requires the JBoss Enterprise SOA Platform 5.0 and the runtime name should be "jboss-soa-p.5.0 Runtime"</property>
-			</fix>
-		</fixes>
-	</project>
-
-
-	<project>
-		<category>ESB for JBoss Enterprise SOA Platform 5.0</category>
-		<name>transform_CSV2XML</name>
-		<included-projects>transform_CSV2XML,transform_CSV2XML_client</included-projects>		
-		<shortDescription>JBoss ESB Smooks CSV->XML Example</shortDescription>
-		<description>This sample demonstrates how to transform a comma separated value (CSV) file to an xml.
-  The tranformation is done by configuring Smooks and performing two transformation, one
-  transformation from CSV to an intermediate xml format, and a second transformation from 
-  the intermediate xml format to the target xml. Example requires a JBoss Enterprise SOA Platform 5.x runtime.</description>
-		<size>19434</size>
-		<url>
-			http://anonsvn.jboss.org/repos/jbosstools/workspace/Denny/esb-example-soa-p5.0/transform_CSV2XML_all.zip
-		</url>
-		<fixes>
-			<fix type="wtpruntime">
-				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.50, org.jboss.ide.eclipse.as.runtime.51</property>
-				<property name="eclipse-projects">transform_CSV2XML,transform_CSV2XML_client</property>
-				<property name="required-components">esb</property>
-				<property name="description">This project example requires the JBoss Enterprise SOA Platform 5.0 and the runtime name should be "jboss-soa-p.5.0 Runtime"</property>
-			</fix>
-		</fixes>
-	</project>
-
-	<project>
-		<category>ESB for JBoss Enterprise SOA Platform 5.0</category>
-		<name>transform_XML2POJO</name>
-		<included-projects>transform_XML2POJO,transform_XML2POJO_client</included-projects>				
-		<shortDescription>JBoss ESB Smooks XML->POJO Example</shortDescription>
-		<description>The purpose of the simple_transformation sample is to illustrate the
-use of Smooks performing a simple transformation by converting a XML file into
-Java POJOs. Example requires a JBoss Enterprise SOA Platform 5.x runtime.</description>
-		<size>40936</size>
-		<url>
-			http://anonsvn.jboss.org/repos/jbosstools/workspace/Denny/esb-example-soa-p5.0/transform_XML2POJO_all.zip
-		</url>
-		<fixes>
-			<fix type="wtpruntime">
-				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.50, org.jboss.ide.eclipse.as.runtime.51</property>
-				<property name="eclipse-projects">transform_XML2POJO,transform_XML2POJO_client</property>
-				<property name="required-components">esb</property>
-				<property name="description">This project example requires the JBoss Enterprise SOA Platform 5.0 and the runtime name should be "jboss-soa-p.5.0 Runtime"</property>
-			</fix>
-		</fixes>
-	</project>
-
-	<project>
-		<category>ESB for JBoss Enterprise SOA Platform 5.0</category>
-		<name>transform_XML2XML_date_manipulation</name>
-		<included-projects>transform_XML2XML_date_manipulation,transform_XML2XML_date_manipulation_client</included-projects>						
-		<shortDescription>JBoss ESB Smooks XML->XML date-manipulation Example</shortDescription>
-		<description>This is another simple sample of how to manually define and apply a Message
-  Transformation within JBoss ESB. Example requires a JBoss Enterprise SOA Platform 5.x runtime.   
-
-  This sample is an extension of the "transformation_XML2XML_simple"
-  Quickstart, demonstrating how  JBoss ESB Transformations can simplify your
-  XSLT transformations by combining the power of XSLT with Java.  In this
-  Quickstart, we use Java to perform the ugly string manipulation on the
-  SampleOrder date field (see OrderDate.java) and use XSLT for what it's good at
-  i.e. Templating.  Again, the transformed SampleOrder.xml message is just
-  printed to the Java console (message before and after).</description>
-		<size>22071</size>
-		<url>
-			http://anonsvn.jboss.org/repos/jbosstools/workspace/Denny/esb-example-soa-p5.0/transform_XML2XML_date_manipulation_all.zip
-		</url>
-		<fixes>
-			<fix type="wtpruntime">
-				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.50, org.jboss.ide.eclipse.as.runtime.51</property>
-				<property name="eclipse-projects">transform_XML2XML_date_manipulation,transform_XML2XML_date_manipulation_client</property>
-				<property name="required-components">esb</property>
-				<property name="description">This project example requires the JBoss Enterprise SOA Platform 5.0 and the runtime name should be "jboss-soa-p.5.0 Runtime"</property>
-			</fix>
-		</fixes>
-	</project>
-
-	<project>
-		<category>ESB for JBoss Enterprise SOA Platform 5.0</category>
-		<name>transform_XML2XML_simple</name>
-		<included-projects>transform_XML2XML_simple,transform_XML2XML_simple_client</included-projects>								
-		<shortDescription>JBoss ESB Smooks XML->XML Example</shortDescription>
-		<description>This is a very basic sample of how to manually define and apply a Message
-  Transformation within JBoss ESB.  It applies a very simple XSLT to a
-  SampleOrder.xml message and prints the before and after XML to the console.
-  Example requires a JBoss Enterprise SOA Platform 5.x runtime.</description>
-		<size>19224</size>
-		<url>
-			http://anonsvn.jboss.org/repos/jbosstools/workspace/Denny/esb-example-soa-p5.0/transform_XML2XML_simple_all.zip
-		</url>
-		<fixes>
-			<fix type="wtpruntime">
-				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.50, org.jboss.ide.eclipse.as.runtime.51</property>
-				<property name="eclipse-projects">transform_XML2XML_simple, transform_XML2XML_simple_client</property>
-				<property name="required-components">esb</property>
-				<property name="description">This project example requires the JBoss Enterprise SOA Platform 5.0 and the runtime name should be "jboss-soa-p.5.0 Runtime"</property>
-			</fix>
-		</fixes>
-	</project>
-	
-	<project>
-		<category>ESB for JBoss Enterprise SOA Platform 4.3</category>
-		<name>helloworld</name>
-		<included-projects>	helloworld,helloworld_testclient </included-projects>
-		<shortDescription>JBoss ESB HelloWorld Example - ESB</shortDescription>
-		<description>NOTE: Before import this example, please make sure that there is a runtime named "jboss-soa-p.4.3.0 Runtime" in the workspace.
-		This example is to prove that the ESB is is properly configured and happy.  
-As well as to demonstrate the needed  minimal files to make a basic ESB component execute.</description>
-		<size>1087454</size>
-
-		<url>
-			http://anonsvn.jboss.org/repos/jbosstools/workspace/Denny/esb-example/helloworld_all.zip
-		</url>
-		<fixes>
-			<fix type="wtpruntime">
-				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.43</property>
-				<property name="eclipse-projects">helloworld, helloworld_testclient</property>
-				<property name="required-components">esb</property>
-				<property name="description">This project example requires the JBoss Enterprise SOA Platform 4.3.0 and the runtime name should be "jboss-soa-p.4.3.0 Runtime"</property>
-			</fix>
-		</fixes>
-	</project>	
-	
-	<project>
-		<category>ESB for JBoss Enterprise SOA Platform 4.3</category>
-		<name>helloworld_action</name>
-		<included-projects>helloworld_action,helloworld_action_client </included-projects>		
-		<shortDescription>JBoss ESB HelloWorld Action Example - ESB</shortDescription>
-		<description>NOTE: Before import this example, please make sure that there is a runtime named "jboss-soa-p.4.3.0 Runtime" in the workspace.
-		This example is to demonstrate the use of multiple action invocations from a single configuration.  You can use  a single Action class and make multiple method calls or use multiple Action
-  classes.</description>
-		<size>24456</size>
-		<url>
-			http://anonsvn.jboss.org/repos/jbosstools/workspace/Denny/esb-example/helloworld_action_all.zip
-		</url>
-		<fixes>
-			<fix type="wtpruntime">
-				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.43</property>
-				<property name="eclipse-projects">helloworld_action, helloworld_action_client</property>
-				<property name="required-components">esb</property>
-				<property name="description">This project example requires the JBoss Enterprise SOA Platform 4.3.0 and the runtime name should be "jboss-soa-p.4.3.0 Runtime"</property>
-			</fix>
-		</fixes>
-
-	</project>
-	
-	<project>
-		<category>ESB for JBoss Enterprise SOA Platform 4.3</category>
-		<name>helloworld_file_action</name>
-		<included-projects>helloworld_file_action,helloworld_file_action_client </included-projects>		
-		<shortDescription>JBoss ESB HelloWorld File Action Example - ESB</shortDescription>
-
-		<description>NOTE: Before import this example, please make sure that there is a runtime named "jboss-soa-p.4.3.0 Runtime" in the workspace.
-		This is a basic example of using the File gateway feature of the JBoss ESB.
-  Files that are found in a particular directory with a particular extension
-  are sent to a JMS queue with actions for processing. Before deploy the project, please change some properties according to the readme.txt file.</description>
-		<size>15140</size>
-		<url>
-			http://anonsvn.jboss.org/repos/jbosstools/workspace/Denny/esb-example/helloworld_file_action_all.zip
-		</url>
-		<fixes>
-			<fix type="wtpruntime">
-				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.43</property>
-				<property name="eclipse-projects">helloworld_file_action, helloworld_file_action_client</property>
-				<property name="required-components">esb</property>
-				<property name="description">This project example requires the JBoss Enterprise SOA Platform 4.3.0 and the runtime name should be "jboss-soa-p.4.3.0 Runtime"</property>
-			</fix>
-		</fixes>
-	</project>	
-	
-	<project>
-		<category>ESB for JBoss Enterprise SOA Platform 4.3</category>
-		<name>webservice_consumer1</name>
-		<included-projects>webservice_consumer1,webservice_consumer1_client </included-projects>				
-		<shortDescription>JBoss ESB Web Service consumer1 Example</shortDescription>
-		<description>NOTE: Before import this example, please make sure that there is a runtime named "jboss-soa-p.4.3.0 Runtime" in the workspace.
-		This example demonstrates how to consume a 181 Web Service in an ESB action.
-    This ESB will make a webservice request that requires a single "toWhom" string parameter.
-    The webservice will return a greeting response. The ESB simply displays the response on the console.
-    </description>
-		<size>1094434</size>
-
-		<url>
-			http://anonsvn.jboss.org/repos/jbosstools/workspace/Denny/esb-example/webservice_consumer1_all.zip
-		</url>
-		<fixes>
-			<fix type="wtpruntime">
-				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.43</property>
-				<property name="eclipse-projects">webservice_consumer1,webservice_consumer1_client</property>
-				<property name="required-components">esb</property>
-				<property name="description">This project example requires the JBoss Enterprise SOA Platform 4.3.0 and the runtime name should be "jboss-soa-p.4.3.0 Runtime"</property>
-			</fix>
-		</fixes>
-	</project>
-
-	<project>
-		<category>ESB for JBoss Enterprise SOA Platform 4.3</category>
-		<name>webservice_producer</name>
-		<included-projects>webservice_producer,webservice_producer_client </included-projects>						
-		<shortDescription>JBoss ESB Web Service producer Example</shortDescription>
-		<description>NOTE: Before import this example, please make sure that there is a runtime named "jboss-soa-p.4.3.0 Runtime" in the workspace.
-		This sample demonstrates how to deploy a JSR181 Webservice endpoint on
-  JBossESB using the SOAPProcessor action.</description>
-		<size>52601</size>
-		<url>
-			http://anonsvn.jboss.org/repos/jbosstools/workspace/Denny/esb-example/webservice_producer_all.zip
-		</url>
-		<fixes>
-			<fix type="wtpruntime">
-				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.43</property>
-				<property name="eclipse-projects">webservice_producer, webservice_producer_client</property>
-				<property name="required-components">esb</property>
-				<property name="description">This project example requires the JBoss Enterprise SOA Platform 4.3.0 and the runtime name should be "jboss-soa-p.4.3.0 Runtime"</property>
-			</fix>
-		</fixes>
-
-	</project>
-
-	<project>
-		<category>ESB for JBoss Enterprise SOA Platform 4.3</category>
-		<name>transform_CSV2XML</name>
-		<included-projects>transform_CSV2XML,transform_CSV2XML_client </included-projects>						
-		<shortDescription>JBoss ESB Smooks CSV->XML Example</shortDescription>
-		<description>NOTE: Before import this example, please make sure that there is a runtime named "jboss-soa-p.4.3.0 Runtime" in the workspace.
-		This sample demonstrates how to transform a comma separated value (CSV) file to an xml.
-  The tranformation is done by configuring Smooks and performing two transformation, one transformation from CSV to an intermediate xml format, and a second transformation from the intermediate xml format to the target xml.</description>
-		<size>18354</size>
-		<url>
-			http://anonsvn.jboss.org/repos/jbosstools/workspace/Denny/esb-example/transform_CSV2XML_all.zip
-		</url>
-		<fixes>
-			<fix type="wtpruntime">
-				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.43</property>
-				<property name="eclipse-projects">transform_CSV2XML,transform_CSV2XML_client</property>
-				<property name="required-components">esb</property>
-				<property name="description">This project example requires the JBoss Enterprise SOA Platform 4.3.0 and the runtime name should be "jboss-soa-p.4.3.0 Runtime"</property>
-			</fix>
-		</fixes>
-	</project>
-
-	<project>
-		<category>ESB for JBoss Enterprise SOA Platform 4.3</category>
-		<name>transform_XML2POJO</name>
-		<included-projects>transform_XML2POJO,transform_XML2POJO_client </included-projects>		
-		<shortDescription>JBoss ESB Smooks XML->POJO Example</shortDescription>
-
-		<description>NOTE: Before import this example, please make sure that there is a runtime named "jboss-soa-p.4.3.0 Runtime" in the workspace.
-		The purpose of the simple_transformation sample is to illustrate the
-use of Smooks performing a simple transformation by converting a XML file into
-Java POJOs.</description>
-		<size>33104</size>
-		<url>
-			http://anonsvn.jboss.org/repos/jbosstools/workspace/Denny/esb-example/transform_XML2POJO_all.zip
-		</url>
-		<fixes>
-			<fix type="wtpruntime">
-				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.43</property>
-				<property name="eclipse-projects">transform_XML2POJO,transform_XML2POJO_client</property>
-				<property name="required-components">esb</property>
-				<property name="description">This project example requires the JBoss Enterprise SOA Platform 4.3.0 and the runtime name should be "jboss-soa-p.4.3.0 Runtime"</property>
-			</fix>
-		</fixes>
-	</project>
-
-	<project>
-		<category>ESB for JBoss Enterprise SOA Platform 4.3</category>
-		<name>transform_XML2XML_date_manipulation</name>
-		<included-projects>transform_XML2XML_date_manipulation,transform_XML2XML_date_manipulation_client </included-projects>
-		<shortDescription>JBoss ESB Smooks XML->XML date-manipulation Example</shortDescription>
-		<description>NOTE: Before import this example, please make sure that there is a runtime named "jboss-soa-p.4.3.0 Runtime" in the workspace.
-		This is another simple sample of how to manually define and apply a Message
-  Transformation within JBoss ESB.  
-
-  This sample is an extension of the "transformation_XML2XML_simple"
-  Quickstart, demonstrating how  JBoss ESB Transformations can simplify your
-  XSLT transformations by combining the power of XSLT with Java.  In this
-  Quickstart, we use Java to perform the ugly string manipulation on the
-  SampleOrder date field (see OrderDate.java) and use XSLT for what it's good at
-  i.e. Templating.  Again, the transformed SampleOrder.xml message is just
-  printed to the Java console (message before and after).</description>
-
-		<size>20313</size>
-		<url>
-			http://anonsvn.jboss.org/repos/jbosstools/workspace/Denny/esb-example/transform_XML2XML_date_manipulation_all.zip
-		</url>
-		<fixes>
-			<fix type="wtpruntime">
-				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.43</property>
-				<property name="eclipse-projects">transform_XML2XML_date_manipulation,transform_XML2XML_date_manipulation_client</property>
-				<property name="required-components">esb</property>
-				<property name="description">This project example requires the JBoss Enterprise SOA Platform 4.3.0 and the runtime name should be "jboss-soa-p.4.3.0 Runtime"</property>
-			</fix>
-		</fixes>
-	</project>
-
-	<project>
-		<category>ESB for JBoss Enterprise SOA Platform 4.3</category>
-		<name>transform_XML2XML_simple</name>
-		<included-projects>transform_XML2XML_simple,transform_XML2XML_simple_client </included-projects>		
-		<shortDescription>JBoss ESB Smooks XML->XML Example</shortDescription>
-		<description>NOTE: Before import this example, please make sure that there is a runtime named "jboss-soa-p.4.3.0 Runtime" in the workspace.
-		This is a very basic sample of how to manually define and apply a Message
-  Transformation within JBoss ESB.  It applies a very simple XSLT to a
-  SampleOrder.xml message and prints the before and after XML to the console.</description>
-		<size>18168</size>
-
-		<url>
-			http://anonsvn.jboss.org/repos/jbosstools/workspace/Denny/esb-example/transform_XML2XML_simple_all.zip
-		</url>
-		<fixes>
-			<fix type="wtpruntime">
-				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.43</property>
-				<property name="eclipse-projects">transform_XML2XML_simple, transform_XML2XML_simple_client</property>
-				<property name="required-components">esb</property>
-				<property name="description">This project example requires the JBoss Enterprise SOA Platform 4.3.0 and the runtime name should be "jboss-soa-p.4.3.0 Runtime"</property>
-			</fix>
-		</fixes>
-	</project>
-	
-	<project>
-		<category>Richfaces 4.0/JSF 2.0</category>
-		<name>richfaces-simpleapp</name>
-		<included-projects>richfaces-simpleapp</included-projects>
-		<shortDescription>RichFaces 4.0 Simple Application</shortDescription>
-		<description>This example creates a simple RichFaces 4.0 Application. It requires JBoss Application Server 6.0 and m2eclipse.
-It includes the richfaces-simpleapp project.
-</description>
-		<size>9046</size>
-		<url>
-			http://anonsvn.jboss.org/repos/jbosstools/workspace/snjeza/richfaces-examples/richfaces-simpleapp.zip
-		</url>
-		<fixes>
-			<fix type="wtpruntime">
-				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.60</property>
-				<property name="eclipse-projects">richfaces-simpleapp</property>
-				<property name="description">This project example requires the JBoss Application Server 6.0</property>
-			</fix>
-			
-			<fix type="plugin">
-				<property name="id">org.maven.ide.eclipse.wtp</property>
-				<property name="versions">0.10.0, 0.11.0,0.12.0</property>
-				<property name="description">The m2eclipse-wtp plugin is required. You can install it using the following update sites: http://m2eclipse.sonatype.org/sites/m2e/ and http://m2eclipse.sonatype.org/sites/m2e-extras/</property>
-			</fix>
-		</fixes>
-	</project>
-	
 </projects>
