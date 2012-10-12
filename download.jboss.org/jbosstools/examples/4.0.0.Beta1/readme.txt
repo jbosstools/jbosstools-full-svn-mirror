@@ -1,0 +1,1 @@
+Keep empty dir so the jenkins jbosstools-jdf-quickstarts-download.jboss.org-rsync-from-git-clone job doesn't puke
