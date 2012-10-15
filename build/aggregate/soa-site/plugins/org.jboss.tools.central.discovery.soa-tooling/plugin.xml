@@ -8,7 +8,7 @@
             description="Collections of tools associated with JBoss products"
             id="com.jboss.jbds.central.discovery.soatooling.bundle"
             name="JBoss Product Tooling"
-            relevance="60">
+            relevance="95">
          <group id="com.jboss.jbds.central.discovery.soatooling.bundle.a" /> 
          <group id="com.jboss.jbds.central.discovery.soatooling.bundle.b" /> 
       </connectorCategory>
@@ -17,7 +17,7 @@
             description="Tools for use with individual JBoss projects (or products)"
             id="com.jboss.jbds.central.discovery.soatooling"
             name="JBoss Project Tooling"
-            relevance="60">
+            relevance="90">
             <!-- use groups to reorder items in a category; otherwise default to alpha order -->
  			<group id="com.jboss.jbds.central.discovery.soatooling.bdgj" /> 
  			<group id="com.jboss.jbds.central.discovery.soatooling.emt" /> 
