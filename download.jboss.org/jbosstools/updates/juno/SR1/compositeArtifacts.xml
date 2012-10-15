@@ -1,14 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <?compositeArtifactRepository version='1.0.0'?>
-<repository name='JBoss Tools Requirements - Composite Juno SR1 Mirror' type='org.eclipse.equinox.internal.p2.artifact.repository.CompositeArtifactRepository' version='1.0.0'>
+<repository name='JBoss Tools Target Platform Site - Juno SR1' type='org.eclipse.equinox.internal.p2.artifact.repository.CompositeArtifactRepository' version='1.0.0'>
 <properties size='2'>
 <property name='p2.compressed' value='true'/>
 <property name='p2.timestamp' value='1348690298000'/>
 </properties>
 <children size='1'>
-<!-- new for Juno SR1 -->
 <child location='latest/'/>
-
 </children>
 </repository>
 
