@@ -64,13 +64,13 @@
             <fix type="plugin">
                 <property name="id">org.eclipse.m2e.core</property>
                 <property name="versions">[1.0.0,2.0.0)</property>
-                <property name="description">This project example requires m2e &amp;gt;= 1.1.</property>
+                <property name="description">This project example requires m2e &gt;= 1.1.</property>
                 <property name="connectorIds">org.eclipse.m2e.feature</property>
             </fix>
             <fix type="plugin">
                 <property name="id">org.eclipse.m2e.wtp</property>
                 <property name="versions">[0.16.0,2.0.0)</property>
-                <property name="description">This project example requires m2e-wtp &amp;gt;= 0.16.0.</property>
+                <property name="description">This project example requires m2e-wtp &gt;= 0.16.0.</property>
                 <property name="connectorIds">org.maven.ide.eclipse.wtp.feature</property>
             </fix>
             <fix type="plugin">
@@ -103,13 +103,13 @@
             <fix type="plugin">
                 <property name="id">org.eclipse.m2e.core</property>
                 <property name="versions">[1.0.0,2.0.0)</property>
-                <property name="description">This project example requires m2e &amp;gt;= 1.1.</property>
+                <property name="description">This project example requires m2e &gt;= 1.1.</property>
                 <property name="connectorIds">org.eclipse.m2e.feature</property>
             </fix>
             <fix type="plugin">
                 <property name="id">org.eclipse.m2e.wtp</property>
                 <property name="versions">[0.16.0,2.0.0)</property>
-                <property name="description">This project example requires m2e-wtp &amp;gt;= 0.16.0.</property>
+                <property name="description">This project example requires m2e-wtp &gt;= 0.16.0.</property>
                 <property name="connectorIds">org.maven.ide.eclipse.wtp.feature</property>
             </fix>
             <fix type="plugin">
@@ -143,13 +143,13 @@
             <fix type="plugin">
                 <property name="id">org.eclipse.m2e.core</property>
                 <property name="versions">[1.0.0,2.0.0)</property>
-                <property name="description">This project example requires m2e &amp;gt;= 1.1.</property>
+                <property name="description">This project example requires m2e &gt;= 1.1.</property>
                 <property name="connectorIds">org.eclipse.m2e.feature</property>
             </fix>
             <fix type="plugin">
                 <property name="id">org.eclipse.m2e.wtp</property>
                 <property name="versions">[0.16.0,2.0.0)</property>
-                <property name="description">This project example requires m2e-wtp &amp;gt;= 0.16.0.</property>
+                <property name="description">This project example requires m2e-wtp &gt;= 0.16.0.</property>
                 <property name="connectorIds">org.maven.ide.eclipse.wtp.feature</property>
             </fix>
             <fix type="plugin">
@@ -192,13 +192,13 @@
             <fix type="plugin">
                 <property name="id">org.eclipse.m2e.core</property>
                 <property name="versions">[1.0.0,2.0.0)</property>
-                <property name="description">This project example requires m2e &amp;gt;= 1.1.</property>
+                <property name="description">This project example requires m2e &gt;= 1.1.</property>
                 <property name="connectorIds">org.eclipse.m2e.feature</property>
             </fix>
             <fix type="plugin">
                 <property name="id">org.eclipse.m2e.wtp</property>
                 <property name="versions">[0.16.0,2.0.0)</property>
-                <property name="description">This project example requires m2e-wtp &amp;gt;= 0.16.0.</property>
+                <property name="description">This project example requires m2e-wtp &gt;= 0.16.0.</property>
                 <property name="connectorIds">org.maven.ide.eclipse.wtp.feature</property>
             </fix>
             <fix type="plugin">
