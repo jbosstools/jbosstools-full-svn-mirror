@@ -488,7 +488,7 @@ To:
 		<if>
 			<available file="${project.build.directory}/category.xml" type="file"/>
 			<then>
-				<move file="${project.build.directory}/category.xml" tofile="${project.build.directory}/site/category.xml" />
+				<move file="${project.build.directory}/category.xml" tofile="${update.site.source.dir}/category.xml" />
 			</then>
 		</if>
 		<!-- support eclipse-repository (new) and eclipse-update-site (old): rename central.site-1.1.0-SNAPSHOT.zip to site_assembly.zip to be compatible with publish.sh script -->
@@ -503,21 +503,15 @@ To:
 
 		<if>
 			<not>
-				<or>
-					<and> <!-- Old school eclipse-update-site -->
-						<available file="${project.build.directory}/site" type="dir" />
-						<available file="${project.build.directory}/site_assembly.zip" type="file" />
-					</and>
-					<and> <!-- eclipse-repository -->
-						<available file="${project.build.directory}/repository" type="dir"/>
-						<available file="${project.build.directory}/site_assembly.zip" type="file" />
-					</and>
-				</or>
+				<and>
+					<available file="${update.site.source.dir}" type="dir" />
+					<available file="${project.build.directory}/site_assembly.zip" type="file" />
+				</and>
 			</not>
 			<then>
 				<fail>
 --
-Could not find ${project.build.directory}/site and one of ${project.build.directory}/site_assembly.zip or ${project.build.directory}/*.zip
+Could not find ${update.site.source.dir} and one of ${project.build.directory}/site_assembly.zip
 Cannot adjust an update site w/o first building it!
 --
 Using maven: mvn3 clean install -U -B -fae -q -e
