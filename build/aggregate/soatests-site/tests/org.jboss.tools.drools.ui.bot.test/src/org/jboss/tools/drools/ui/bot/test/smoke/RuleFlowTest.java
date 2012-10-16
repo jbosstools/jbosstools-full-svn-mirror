@@ -41,6 +41,7 @@ import org.jboss.tools.ui.bot.ext.SWTTestExt;
 import org.jboss.tools.ui.bot.ext.SWTUtilExt;
 import org.jboss.tools.ui.bot.ext.Timing;
 import org.jboss.tools.ui.bot.ext.gen.ActionItem;
+import org.jboss.tools.ui.bot.ext.helper.ContextMenuHelper;
 import org.jboss.tools.ui.bot.ext.types.IDELabel;
 import org.jboss.tools.ui.bot.ext.types.ViewType;
 import org.junit.Test;
@@ -75,8 +76,19 @@ public class RuleFlowTest extends SWTTestExt{
      */
     @Test
     public void testRuleFlow() {
+        configureJbpmProject();
         runRuleFlowCheck(DroolsAllBotTests.RULE_FLOW_JAVA_TEST_FILE_NAME);
         ruleFlowEditorCheck(DroolsAllBotTests.RULE_FLOW_FILE_NAME);
+    }
+
+    /**
+     * Sets jBPM library 
+     */
+    private void configureJbpmProject() {
+        SWTBotTree tree = eclipse.showView(ViewType.PACKAGE_EXPLORER).tree();
+        tree.getTreeItem(DroolsAllBotTests.DROOLS_PROJECT_NAME).select();
+        ContextMenuHelper.clickContextMenu(tree, IDELabel.Menu.PACKAGE_EXPLORER_CONFIGURE,
+                IDELabel.Menu.CONVERT_TO_JBPM_PROJECT);
     }
 
     /**

@@ -133,7 +133,7 @@ public class DroolsViewsTest extends SWTTestExt {
      * Test of Agenda view.
      */
     @Test
-    public void agendaTest() {
+    public void testAgenda() {
         bot.editorByTitle(RULES_FILE).show();
         eclipse.stepOver();
         SWTUtilExt.startCapturingStandardOutput();
@@ -170,7 +170,7 @@ public class DroolsViewsTest extends SWTTestExt {
      */
     @Test
     @Ignore
-    public void refreshAgendaTest() {
+    public void testRefreshAgenda() {
         openView(IDELabel.View.AGENDA);
         eclipse.stepOver();
         assertTrue("Agenda is not refreshing automatically.", bot.tree().getAllItems()[0].getItems().length > 0);
@@ -180,7 +180,7 @@ public class DroolsViewsTest extends SWTTestExt {
      * Test of global variable in Global Data.
      */
     @Test
-    public void globalDataTest() {
+    public void testGlobalData() {
         openView(IDELabel.View.GLOBAL_DATA);
         assertTrue("Global data has wrong number of items. Expected 1 but was "
                 + bot.tree().getAllItems().length, bot.tree().getAllItems().length == 1);
@@ -193,7 +193,7 @@ public class DroolsViewsTest extends SWTTestExt {
      * Test of Audit view.
      */
     @Test
-    public void auditTest() {
+    public void testAudit() {
         eclipse.finishDebug();
         openView(IDELabel.View.AUDIT);
         SWTBotView auditView = bot.viewByTitle(IDELabel.View.AUDIT);
@@ -250,7 +250,7 @@ public class DroolsViewsTest extends SWTTestExt {
      * Test of Working Memory view
      */
     @Test
-    public void workingMemoryTest() {
+    public void testWorkingMemory() {
         openView(IDELabel.View.WORKING_MEMORY);
 
         SWTBotTree workingMemoryTree = bot.tree();

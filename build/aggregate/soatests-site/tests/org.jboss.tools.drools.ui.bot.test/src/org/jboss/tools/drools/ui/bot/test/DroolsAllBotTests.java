@@ -24,6 +24,7 @@ import org.jboss.tools.drools.ui.bot.test.smoke.GuvnorRepositoriesTest;
 import org.jboss.tools.drools.ui.bot.test.smoke.ManageDroolsProject;
 import org.jboss.tools.drools.ui.bot.test.smoke.ManageDroolsRules;
 import org.jboss.tools.drools.ui.bot.test.smoke.ManageDroolsRuntime;
+import org.jboss.tools.drools.ui.bot.test.smoke.ManageJbpmRuntime;
 import org.jboss.tools.drools.ui.bot.test.smoke.OpenDroolsPerspective;
 import org.jboss.tools.drools.ui.bot.test.smoke.RuleFlowTest;
 import org.jboss.tools.ui.bot.ext.RequirementAwareSuite;
@@ -49,6 +50,7 @@ import org.junit.runners.Suite.SuiteClasses;
 @SuiteClasses({
     OpenDroolsPerspective.class,
     ManageDroolsRuntime.class,
+    ManageJbpmRuntime.class,
     ManageDroolsProject.class,
     ManageDroolsRules.class,
     DroolsRulesEditorTest.class,
@@ -63,7 +65,10 @@ public class DroolsAllBotTests extends SWTTestExt {
     public static final String DROOLS_PROJECT_NAME = "droolsTest";
     public static final String DROOLS_RUNTIME_NAME = "Drools Test Runtime";
     public static String DROOLS_RUNTIME_LOCATION = null;
+    public static String JBPM_RUNTIME_LOCATION = null;
+    public static final String JBPM_RUNTIME_NAME = "jBPM Test Runtime";
     public static String CREATE_DROOLS_RUNTIME_LOCATION = null;
+    public static String CREATE_JBPM_RUNTIME_LOCATION = null;
     public static String SRC_MAIN_JAVA_TREE_NODE = "src/main/java";
     public static String SRC_MAIN_RULES_TREE_NODE = "src/main/rules";
     public static String COM_SAMPLE_TREE_NODE = "com.sample";
@@ -80,12 +85,17 @@ public class DroolsAllBotTests extends SWTTestExt {
     public static final String DECISION_TABLE_JAVA_TEST_FILE_NAME = "DecisionTableTest.java";
     public static final String USE_EXTERNAL_DROOLS_RUNTIME_PROPERTY_NAME = "use-external-drools-runtime";
     public static final String EXTERNAL_DROOLS_RUTIME_HOME_PROPERTY_NAME = "external-drools-runtime-home";
+    public static final String USE_EXTERNAL_JBPM_RUNTIME_PROPERTY_NAME = "use-external-jbpm-runtime";
+    public static final String EXTERNAL_JBPM_RUTIME_HOME_PROPERTY_NAME = "external-jbpm-runtime-home";
     public static final String GUVNOR_REPOSITORY_URL_PROPERTY_NAME = "guvnor-repository-url";
     private static boolean USE_EXTERNAL_DROOLS_RUNTIME;
+    private static boolean USE_EXTERNAL_JBPM_RUNTIME;
     private static boolean isFirstRun = true;
 
     private static String testDroolsRuntimeName = null;
     private static String testDroolsRuntimeLocation = null;
+    private static String testJbpmRuntimeName = null;
+    private static String testJbpmRuntimeLocation = null;
     private static String guvnorRepositoryUrl = null;
     private static String guvnorRepositoryRootTreeItem = "http://localhost:8080/jboss-brms/org.drools.guvnor.Guvnor/webdav/";
 
@@ -103,6 +113,22 @@ public class DroolsAllBotTests extends SWTTestExt {
 
     public static void setTestDroolsRuntimeLocation(String testDroolsRuntimeLocation) {
         DroolsAllBotTests.testDroolsRuntimeLocation = testDroolsRuntimeLocation;
+    }
+
+    public static String getTestJbpmRuntimeName() {
+        return testJbpmRuntimeName;
+    }
+
+    public static void setTestJbpmRuntimeName(String testJbmpRuntimeName) {
+        DroolsAllBotTests.testJbpmRuntimeName = testJbmpRuntimeName;
+    }
+
+    public static String getTestJbpmRuntimeLocation() {
+        return testJbpmRuntimeLocation;
+    }
+
+    public static void setTestJbpmRuntimeLocation(String testJbpmRuntimeLocation) {
+        DroolsAllBotTests.testJbpmRuntimeLocation = testJbpmRuntimeLocation; 
     }
 
     public static String getGuvnorRepositoryUrl() {
@@ -138,7 +164,7 @@ public class DroolsAllBotTests extends SWTTestExt {
         DroolsAllBotTests.USE_EXTERNAL_DROOLS_RUNTIME = useExternalDroolRuntime != null && useExternalDroolRuntime.equalsIgnoreCase("true");
         String droolsRuntimeLocation = props.getProperty(DroolsAllBotTests.EXTERNAL_DROOLS_RUTIME_HOME_PROPERTY_NAME);
         String tmpDir = System.getProperty("java.io.tmpdir");
-        if (droolsRuntimeLocation == null || droolsRuntimeLocation.length() == 0) {
+        if (droolsRuntimeLocation == null || droolsRuntimeLocation.trim().length() == 0) {
             DroolsAllBotTests.DROOLS_RUNTIME_LOCATION = tmpDir;
         } else {
             DroolsAllBotTests.DROOLS_RUNTIME_LOCATION = droolsRuntimeLocation;
@@ -146,6 +172,19 @@ public class DroolsAllBotTests extends SWTTestExt {
         DroolsAllBotTests.CREATE_DROOLS_RUNTIME_LOCATION = tmpDir + File.separator + "drools";
         // Create directory for Drools Runtime which will be created as a part of test
         new File(DroolsAllBotTests.CREATE_DROOLS_RUNTIME_LOCATION).mkdir();
+
+        String useExternalJbpmRuntime = props.getProperty(DroolsAllBotTests.USE_EXTERNAL_JBPM_RUNTIME_PROPERTY_NAME);
+        DroolsAllBotTests.USE_EXTERNAL_JBPM_RUNTIME = useExternalJbpmRuntime != null && useExternalJbpmRuntime.equalsIgnoreCase("true");
+        String jbpmRuntimeLocation = props.getProperty(DroolsAllBotTests.EXTERNAL_JBPM_RUTIME_HOME_PROPERTY_NAME);
+        if (jbpmRuntimeLocation == null || jbpmRuntimeLocation.trim().length() == 0) {
+            DroolsAllBotTests.JBPM_RUNTIME_LOCATION = tmpDir;
+        } else {
+            DroolsAllBotTests.JBPM_RUNTIME_LOCATION = jbpmRuntimeLocation;
+        }
+        DroolsAllBotTests.CREATE_JBPM_RUNTIME_LOCATION = tmpDir + File.separator + "jBPM";
+        // Create directory for jBPM Runtime which will be created as a part of test
+        new File(DroolsAllBotTests.CREATE_JBPM_RUNTIME_LOCATION).mkdir();
+
         try {
             bot.button(IDELabel.Button.NO).click();
         } catch (WidgetNotFoundException wnfe) {
@@ -204,10 +243,14 @@ public class DroolsAllBotTests extends SWTTestExt {
     public static boolean useExternalDroolsRuntime() {
         return USE_EXTERNAL_DROOLS_RUNTIME;
     }
+    
+    public static boolean useExternalJbpmRuntime() {
+        return USE_EXTERNAL_JBPM_RUNTIME;
+    }
 
     @AfterClass
     public static void tearDownTest() {
         // delete created drools runtime
         SWTUtilExt.deleteDirectory(DroolsAllBotTests.CREATE_DROOLS_RUNTIME_LOCATION);
-    }  
+    }
 }
