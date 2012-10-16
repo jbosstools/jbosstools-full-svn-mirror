@@ -511,7 +511,7 @@ To:
 			<then>
 				<fail>
 --
-Could not find ${update.site.source.dir} and one of ${project.build.directory}/site_assembly.zip
+Could not find ${update.site.source.dir} and ${project.build.directory}/site_assembly.zip
 Cannot adjust an update site w/o first building it!
 --
 Using maven: mvn3 clean install -U -B -fae -q -e
