@@ -6,5 +6,5 @@ In fact, you do not need to unzip this zip at all - you can simply use the Eclip
 ( Help > Install New Software... > Add... > Archive... ) to perform the installation directly from 
 this zip file.
 
-For more information, see https://www.jboss.org/tools/download/installation/update_3_3.html#fromzip
+For more information, see https://www.jboss.org/tools/download/installation/update_4_0.html#fromzip
 
