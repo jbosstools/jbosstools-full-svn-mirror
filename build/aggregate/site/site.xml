@@ -257,8 +257,7 @@
 	<feature url="features/org.jboss.tools.community.central.feature.source_0.0.0.jar" id="org.jboss.tools.community.central.feature.source" version="0.0.0">
 		<category name="AllSources" />
 	</feature>
-	<feature url="features/org.jboss.tools.central.discovery.feature.source_0.0.0.jar" id="org.jboss.tools.central.discovery.feature.source" version="0.0.0">
-	</feature>
+	<!-- JBIDE-12389 to hide central.discovery plugin and feature, exclude source feature too <feature url="features/org.jboss.tools.central.discovery.feature.source_0.0.0.jar" id="org.jboss.tools.central.discovery.feature.source" version="0.0.0"/> -->
 	<feature url="features/org.jboss.tools.richfaces.feature.source_0.0.0.jar" id="org.jboss.tools.richfaces.feature.source" version="0.0.0">
 		<category name="AllSources" />
 	</feature>
