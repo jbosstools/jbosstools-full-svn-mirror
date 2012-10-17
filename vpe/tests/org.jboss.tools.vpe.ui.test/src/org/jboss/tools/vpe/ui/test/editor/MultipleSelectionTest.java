@@ -46,13 +46,19 @@ public class MultipleSelectionTest extends VpeTest{
 		JSPMultiPageEditor part = openEditor(input);
 		ITextViewer viewer = part.getSourceEditor().getTextViewer();
 		
-		int startSelectionOffcet = TestUtil.getLinePositionOffcet(viewer, 6, 1);
-		int length = TestUtil.getLinePositionOffcet(viewer, 9, 4)-startSelectionOffcet;
+		int startSelectionOffcet = TestUtil.getLinePositionOffcet(viewer, 4, 1);
+		int length = TestUtil.getLinePositionOffcet(viewer, 4, 45)-startSelectionOffcet;
 		viewer.setSelectedRange(startSelectionOffcet, length);
 		VpeController vpeController = TestUtil.getVpeController(part);
         vpeController.sourceSelectionChanged();
         List<nsIDOMNode> selectedNodes = vpeController.getXulRunnerEditor().getSelectedNodes();
-        assertEquals("Shuld be selected ",3,selectedNodes.size()); //$NON-NLS-1$
+        /*
+         * When Git repository is checked out on Windows OS
+         * git could add window style caret return symbol,
+         * after that additional text nodes appear.
+         * To fix it: test page was changed.
+         */
+        assertEquals("Shuld be selected ",4,selectedNodes.size()); //$NON-NLS-1$
 	}
 	
 }
