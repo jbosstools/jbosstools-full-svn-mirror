@@ -1,4 +1,4 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <directory xmlns="http://www.eclipse.org/mylyn/discovery/directory/">
-<entry url="plugins/org.jboss.tools.central.discovery.soa-tooling_1.0.0.v20120419-2031-Beta3.jar" permitCategories="true"/>
+<entry url="plugins/org.jboss.tools.central.discovery.soa-tooling_1.1.0.Beta2-v20121017-0533.jar" permitCategories="true"/>
 </directory>

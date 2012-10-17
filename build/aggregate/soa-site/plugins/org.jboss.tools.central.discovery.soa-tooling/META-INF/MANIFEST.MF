@@ -1,8 +1,8 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: %BundleVendor
+Bundle-Name: %BundleName
 Bundle-SymbolicName: org.jboss.tools.central.discovery.soa-tooling;singleton:=true
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 1.1.0.qualifier
 Require-Bundle: org.jboss.tools.central,
  org.eclipse.ui;bundle-version="3.7.0",
  org.eclipse.core.runtime,
@@ -15,5 +15,5 @@ Require-Bundle: org.jboss.tools.central,
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-Localization: plugin
-Bundle-Vendor: %BundleName
+Bundle-Vendor: %BundleVendor
 Bundle-Activator: org.jboss.tools.central.discovery.JBossCentralDiscoveryActivator

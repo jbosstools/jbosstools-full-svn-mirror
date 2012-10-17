@@ -35,9 +35,11 @@
 	<feature url="features/org.savara.tools.incubator.feature_0.0.0.jar" id="org.savara.tools.incubator.feature" version="0.0.0">
 		<category name="SOATools" />
 	</feature>
+	<!-- no longer on savara site?
 	<feature url="features/org.jboss.savara.tools.feature_0.0.0.jar" id="org.jboss.savara.tools.feature" version="0.0.0">
 		<category name="SOATools" />
 	</feature>
+	-->
 
 	<feature url="features/org.jboss.tools.esb.feature_0.0.0.jar" id="org.jboss.tools.esb.feature" version="0.0.0">
 		<category name="SOADataServices" />

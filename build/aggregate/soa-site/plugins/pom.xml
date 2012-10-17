@@ -3,11 +3,11 @@
 	<parent>
 		<groupId>org.jboss.tools</groupId>
 		<artifactId>org.jboss.tools.site.soa-tooling.root</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>1.1.0-SNAPSHOT</version>
 	</parent>
 	<groupId>org.jboss.tools.soa-tooling</groupId>
 	<artifactId>org.jboss.tools.soa-tooling.plugins</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.1.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<modules>
 		<module>org.jboss.tools.central.discovery.soa-tooling</module>
