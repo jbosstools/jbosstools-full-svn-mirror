@@ -12,9 +12,9 @@ fun! ReplaceTimestamp()
 endfun
 nnoremap <Leader>ts :call ReplaceTimestamp()<CR>
 -->
-<property name='p2.timestamp' value='1340989457000'/>
+<property name='p2.timestamp' value='1350452179000'/>
 </properties>
 <children size='1'>
-<child location='SR0/'/>
+<child location='SR0a/'/>
 </children>     
 </repository>

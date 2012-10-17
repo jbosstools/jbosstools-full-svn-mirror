@@ -5,11 +5,8 @@
 <property name='p2.compressed' value='true'/>
 <property name='p2.timestamp' value='1350450737000'/>
 </properties>
-<children size='3'>
+<children size='2'>
 <child location='../../../requirements/bpel/1.0.0.v20120518-1552-H175-CI/'/>
 <child location='../../../requirements/bpmn2-modeler/201202231559/'/>
-<!-- switchyard depends on this ancient version of m2e-wtp, 0.14 -->
-<child location='../../../requirements/m2eclipse-wtp-0.14.0-release/'/>
 </children>
 </repository>
-
