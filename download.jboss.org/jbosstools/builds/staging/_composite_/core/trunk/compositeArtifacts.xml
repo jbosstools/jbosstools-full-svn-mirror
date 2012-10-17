@@ -7,7 +7,7 @@
      get new time w/ 
       date +%s000
 -->
-<property name='p2.timestamp' value='1340940100000'/>
+<property name='p2.timestamp' value='1350454022000'/>
 </properties>
 <children size='52'>
 
@@ -70,9 +70,6 @@
 <child location='../../../../staging.previous/jbosstools-4.0_trunk.component--vpe/all/repo/'/>
 <child location='../../../../staging.previous/jbosstools-4.0_trunk.component--ws/all/repo/'/>
 <child location='../../../../staging.previous/xulrunner-1.9.2/all/repo/'/>
-
-<!-- JBIDE-12292 Use m2e-wtp dev builds -->
-<child location='../../../../staging/m2e-wtp-juno/all/repo/'/>
 
 </children>
 </repository>
