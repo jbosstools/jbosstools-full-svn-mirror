@@ -33,19 +33,6 @@
 		</profile>
 
 		<profile>
-			<id>emma/lib</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-				<property>
-					<name>coverage</name>
-				</property>
-			</activation>
-			<modules>
-				<module>emma/lib</module>
-			</modules>
-		</profile>
-
-		<profile>
 			<id>tests</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
@@ -363,9 +350,7 @@
 		<profile>
 			<id>cdi-tests</id>
 			<modules>
-				<module>emma/lib</module>
 				<module>../cdi/tests</module>
-				<module>emma/reports</module>
 			</modules>
 		</profile>
 
@@ -617,19 +602,6 @@
 				<module>../maven</module>
 				<module>../cdi</module>
 				<module>../central</module>
-			</modules>
-		</profile>
-
-		<profile>
-			<id>aggregate-coverage</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-				<property>
-					<name>coverage</name>
-				</property>
-			</activation>
-			<modules>
-				<module>emma/reports</module>
 			</modules>
 		</profile>
 	</profiles>
