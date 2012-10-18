@@ -12,7 +12,6 @@
 	<version>0.0.2-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<modules>
-		<module>../target-platform</module>
 		<module>site</module>
 	</modules>
 	<!-- to build an individual site, use this:
