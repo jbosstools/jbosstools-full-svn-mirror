@@ -11,6 +11,13 @@
 	<artifactId>org.jboss.tools.site</artifactId>
 	<version>0.0.2-SNAPSHOT</version>
 	<packaging>pom</packaging>
+
+	<properties>
+		<!-- override parent pom to build from latest MAXIMUM TP instead of MINIMUM -->
+		<targetPlatformGroup>${targetPlatformGroup-maximum}</targetPlatformGroup>
+		<jbosstools-target-site>${jbosstools-target-site-maximum}</jbosstools-target-site>
+	</properties>
+
 	<modules>
 		<module>site</module>
 	</modules>
