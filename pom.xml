@@ -8,7 +8,7 @@
 	<packaging>pom</packaging>
 	<modules>
 		<module>build/parent</module>
-		<module>build</module>
+ 		<module>build</module>
 	</modules>
 </project>
 	
