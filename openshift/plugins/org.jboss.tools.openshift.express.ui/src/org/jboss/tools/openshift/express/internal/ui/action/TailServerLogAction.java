@@ -154,11 +154,10 @@ public class TailServerLogAction extends AbstractAction implements IConsoleListe
 	 * @throws JSchException
 	 *             in case of underlying exception
 	 * @throws IOException
-	 *             in case of underlying exception
-	 */
+     */
 	private TailServerLogWorker startTailProcess(final String host, final String appId, final String appName,
 			final MessageConsole console) throws IOException {
-		final String logFilePath = appName + "/logs/*.log";
+		final String logFilePath = appName + "/logs/*";
 		final String options = "-f -n 100";
 
 		JSch.setLogger(new JschToEclipseLogger());
