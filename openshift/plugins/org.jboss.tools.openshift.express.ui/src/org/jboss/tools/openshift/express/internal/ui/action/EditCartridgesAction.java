@@ -11,7 +11,6 @@
 package org.jboss.tools.openshift.express.internal.ui.action;
 
 import java.io.UnsupportedEncodingException;
-import java.net.URI;
 import java.net.URISyntaxException;
 
 import org.eclipse.jface.dialogs.Dialog;
@@ -26,6 +25,7 @@ import org.jboss.tools.openshift.express.internal.ui.utils.Logger;
 import org.jboss.tools.openshift.express.internal.ui.wizard.embed.EmbedCartridgeWizard;
 
 import com.openshift.client.IApplication;
+import com.openshift.client.IUser;
 import com.openshift.client.OpenShiftException;
 
 /**
@@ -61,12 +61,7 @@ public class EditCartridgesAction extends AbstractAction {
 	}
 
 	private Connection getConnection(final IApplication application) throws UnsupportedEncodingException, OpenShiftException, URISyntaxException {
-		Connection tmpConnection = new Connection(new URI(application.getDomain().getUser().getRhlogin()), null);
-		final Connection existingConnection = ConnectionsModel.getDefault().getConnectionByUrl(tmpConnection.toURLString());
-		if (existingConnection == null) {
-			return tmpConnection;
-		} else {
-			return existingConnection;
-		}
+		IUser user = application.getDomain().getUser();
+		return ConnectionsModel.getDefault().getConnectionByUsernameAndHost(user.getRhlogin(), user.getServer());
 	}
 }

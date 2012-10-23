@@ -149,6 +149,16 @@ public class ConnectionsModel {
 		}
 	}
 
+	public Connection getConnectionByUsernameAndHost(String username, String host) {
+		try {
+			String url = new Connection(username, null, host, false).toURLString();
+			return getConnectionByUrl(url);
+		} catch (UnsupportedEncodingException e) {
+			OpenShiftUIActivator.log(NLS.bind("Could not get url for connection {0}", username), e);
+			return null;
+		}
+	}
+
 	public Connection[] getConnections() {
 		Collection<Connection> c = allConnections.values();
 		Connection[] rets = (Connection[]) c.toArray(new Connection[c.size()]);

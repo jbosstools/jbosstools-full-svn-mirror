@@ -87,7 +87,7 @@ public class Connection {
 		setUser(connection.getUser());
 	}
 
-	private Connection(String username, String password, String host, boolean rememberPassword) {
+	Connection(String username, String password, String host, boolean rememberPassword) {
 		this.username = getUsername(username);
 		this.password = password;
 		setHost(host);
