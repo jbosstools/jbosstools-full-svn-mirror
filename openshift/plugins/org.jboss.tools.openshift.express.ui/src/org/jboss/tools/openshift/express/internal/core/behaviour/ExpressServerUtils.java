@@ -12,7 +12,6 @@ package org.jboss.tools.openshift.express.internal.core.behaviour;
 
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -173,7 +172,7 @@ public class ExpressServerUtils {
 				connectionValue = ConnectionUtils.getUrlForUsername(username);
 			} catch (UnsupportedEncodingException e) {
 				OpenShiftUIActivator.log(NLS.bind("Could not get connection url for user {0}", username), e);
-			} catch (URISyntaxException e) {
+			} catch (MalformedURLException e) {
 				OpenShiftUIActivator.log(NLS.bind("Could not get connection url for user {0}", username), e);
 			}
 		}
