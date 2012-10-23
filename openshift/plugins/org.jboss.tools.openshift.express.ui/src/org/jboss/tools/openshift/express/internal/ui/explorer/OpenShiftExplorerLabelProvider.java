@@ -69,7 +69,11 @@ public class OpenShiftExplorerLabelProvider implements IStyledLabelProvider, ILa
 
 	@Override
 	public String getText(Object element) {
-		return getStyledText(element).getString();
+		StyledString styledString = getStyledText(element);
+		if (styledString == null) {
+			return null;
+		}
+		return styledString.getString();
 	}
 
 	@Override
