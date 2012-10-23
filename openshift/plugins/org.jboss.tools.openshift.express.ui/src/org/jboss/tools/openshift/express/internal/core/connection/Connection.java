@@ -78,7 +78,7 @@ public class Connection {
 		UrlPortions portions = UrlUtils.toPortions(url);
 		this.username = portions.getUsername();
 		Assert.isLegal(
-				StringUtils.isEmpty(username), 
+				!StringUtils.isEmpty(username), 
 				NLS.bind("There is no no username for connection to url {0}", url.toString()));
 		this.password = portions.getPassword();
 		setHost(portions.getHost());
