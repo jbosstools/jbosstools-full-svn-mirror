@@ -146,7 +146,7 @@ public class Connection {
 
 	public String setPassword(String password) {
 		this.password = password;
-		setRememberPassword(!StringUtils.isEmpty(password));
+//		setRememberPassword(!StringUtils.isEmpty(password));
 		this.passwordLoaded = true;
 		clearUser();
 		return password;
