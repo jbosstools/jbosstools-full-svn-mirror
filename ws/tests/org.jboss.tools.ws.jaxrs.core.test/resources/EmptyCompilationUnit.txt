@@ -1,6 +1,0 @@
-package org.jboss.tools.ws.jaxrs.sample.services;
-
-import java.net.URI;
-
-
-

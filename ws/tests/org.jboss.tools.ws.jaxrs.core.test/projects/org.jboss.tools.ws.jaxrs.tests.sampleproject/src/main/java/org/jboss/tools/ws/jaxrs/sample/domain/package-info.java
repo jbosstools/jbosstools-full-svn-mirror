@@ -1,1 +1,0 @@
-package org.jboss.tools.ws.jaxrs.sample.domain;

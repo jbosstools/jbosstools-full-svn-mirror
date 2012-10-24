@@ -1,5 +1,0 @@
-@Target({ElementType.METHOD})
-@Retention(RetentionPolicy.RUNTIME)
-@HttpMethod("FOOBAR")
-public @interface FOOBAR { 
-}

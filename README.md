@@ -7,3 +7,4 @@ Instructions on how to build JBoss Tools is at : https://community.jboss.org/wik
 
 It is currently hosted at http://anonsvn.jboss.org/repos/jbosstools/ and mirrored on github at https://github.com/jbosstools/jbosstools-svn-mirror
 
+website: http://jboss.org/tools

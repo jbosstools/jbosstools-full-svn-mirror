@@ -1,6 +1,0 @@
-	@Path("{id}")
-	@Formatted
-	public Object getFoo3(@PathParam("id") Integer id, @Context UriInfo uriInfo,
-			@Context HttpServletRequest request) {
-		return null;
-	}

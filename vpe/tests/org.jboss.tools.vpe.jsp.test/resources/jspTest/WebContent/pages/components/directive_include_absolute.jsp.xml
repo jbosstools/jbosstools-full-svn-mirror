@@ -1,6 +1,0 @@
-<tests>
-<test id="directive_include_absolute">
-<DIV VPE:INCLUDE-ELEMENT="yes">
-</DIV>
-</test>
-</tests>

@@ -1,6 +1,0 @@
-<tests>
-	<test id="wbr">
-		<WBR STYLE="-moz-user-modify: read-only;" ID="wbr" >
-		</WBR>
-	</test>
-</tests>
