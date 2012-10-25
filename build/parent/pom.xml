@@ -9,7 +9,7 @@
 	<packaging>pom</packaging>
 
 	<properties>
-		<!-- to build w/ latest 0.15.0-SNAPSHOT, run `mvn install -DtychoVersion=0.15.0-SNAPSHOT` -->
+		<!-- to build w/ latest 0.17.0-SNAPSHOT, run `mvn install -DtychoVersion=0.17.0-SNAPSHOT` -->
 		<tychoVersion>0.15.0</tychoVersion>
 		<tychoExtrasVersion>0.15.0</tychoExtrasVersion>
 		<scmBranch>trunk</scmBranch>
