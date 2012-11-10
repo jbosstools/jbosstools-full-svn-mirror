@@ -7,7 +7,7 @@ https://github.com/jbosstools/jbosstools-build/ [parent, target-platforms]
 https://github.com/jbosstools/jbosstools-build-ci/ [jacoco, publish, util]
 https://github.com/jbosstools/jbosstools-build-sites/ [aggregate, results]
 https://github.com/jbosstools/jbosstools-maven-plugins/ [tycho-plugins]
-https://github.com/jbosstools-integration-tests/ [aggregate/soatests-site/tests]
+https://github.com/jbosstools/jbosstools-integration-tests/ [aggregate/soatests-site/tests]
 
 Instructions on how to build JBoss Tools is at : https://community.jboss.org/wiki/HowToBuildJBossToolsWithMaven3
 
