@@ -1,9 +1,0 @@
-<site>
-	<category-def label="JBoss Application Server Adapters" name="org.eclipse.wst.server.core.serverAdapter">
-	</category-def>
-	<feature url="features/org.jboss.ide.eclipse.as.feature_2.4.0.Alpha2-v20120926-0821-B37.jar" id="org.jboss.ide.eclipse.as.feature" version="2.4.0.Alpha2-v20120926-0821-B37"><category name="org.eclipse.wst.server.core.serverAdapter"></category></feature>
-	<feature url="features/org.jboss.ide.eclipse.archives.feature_3.4.0.Alpha2-v20121004-1832-B38.jar" id="org.jboss.ide.eclipse.archives.feature" version="3.4.0.Alpha2-v20121004-1832-B38"></feature>
-	<feature url="features/org.jboss.tools.jmx.feature_1.4.0.Alpha2-v20120922-0112-B33.jar" id="org.jboss.tools.jmx.feature" version="1.4.0.Alpha2-v20120922-0112-B33"></feature>
-	<feature url="features/org.jboss.tools.runtime.core.feature_2.0.0.Alpha2-v20120922-0112-B33.jar" id="org.jboss.tools.runtime.core.feature" version="2.0.0.Alpha2-v20120922-0112-B33"></feature>
-	<feature url="features/org.jboss.tools.common.core.feature_3.4.0.Alpha2-v20120922-0102-B38.jar" id="org.jboss.tools.common.core.feature" version="3.4.0.Alpha2-v20120922-0102-B38"></feature>
-</site>

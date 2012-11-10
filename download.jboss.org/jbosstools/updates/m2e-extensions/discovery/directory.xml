@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<directory xmlns="http://www.eclipse.org/mylyn/discovery/directory/">
-	<entry url="http://download.jboss.org/jbosstools/updates/m2e-extensions/discovery/org.eclipse.m2e.discovery.oss-catalog.jar" permitCategories="true"/>
-</directory>
