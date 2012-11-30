@@ -8,6 +8,6 @@
 	</parent>
 	<groupId>org.jboss.tools</groupId>
 	<artifactId>org.jboss.tools.central.discovery.soa-tooling.feature</artifactId>
-	<version>1.0.2</version>
+	<version>1.0.2-SNAPSHOT</version>
 	<packaging>eclipse-feature</packaging>
 </project>
